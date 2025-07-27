@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5i802i0ffn3t"]
+
+[ext_resource type="Script" uid="uid://bf1cupbd48utp" path="res://TeeSkin.cs" id="2_12h6k"]
+[ext_resource type="Texture2D" uid="uid://g158ngahyedr" path="res://TeeSurviver-Sheet.png" id="3_tbqiu"]
+
+[node name="TeeSkin" type="Node2D"]
+script = ExtResource("2_12h6k")
+skinTexture = ExtResource("3_tbqiu")

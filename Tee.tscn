@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://3cp3sg142x6n"]
+
+[ext_resource type="PackedScene" uid="uid://c5i802i0ffn3t" path="res://TeeSkin.tscn" id="1_70jw6"]
+[ext_resource type="Script" uid="uid://c0sr8xio5meso" path="res://Tee.cs" id="1_j8wys"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wetua"]
+size = Vector2(32, 32)
+
+[node name="Tee" type="CharacterBody2D"]
+script = ExtResource("1_j8wys")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wetua")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="CollisionShape2D"]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+
+[node name="TeeSkin" parent="." instance=ExtResource("1_70jw6")]

@@ -1,0 +1,89 @@
+[gd_resource type="SpriteFrames" load_steps=11 format=3 uid="uid://bymbs8rg05beh"]
+
+[ext_resource type="Texture2D" uid="uid://g158ngahyedr" path="res://TeeSurviver-Sheet.png" id="1_0y5bm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tx5ms"]
+atlas = ExtResource("1_0y5bm")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ck1t0"]
+atlas = ExtResource("1_0y5bm")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2axo"]
+atlas = ExtResource("1_0y5bm")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0feb2"]
+atlas = ExtResource("1_0y5bm")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqylx"]
+atlas = ExtResource("1_0y5bm")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_huuyn"]
+atlas = ExtResource("1_0y5bm")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ue1h"]
+atlas = ExtResource("1_0y5bm")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nfpsq"]
+atlas = ExtResource("1_0y5bm")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8284g"]
+atlas = ExtResource("1_0y5bm")
+region = Rect2(128, 128, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tx5ms")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ck1t0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c2axo")
+}],
+"loop": true,
+"name": &"Body",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0feb2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vqylx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_huuyn")
+}],
+"loop": true,
+"name": &"Eyes",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ue1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nfpsq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8284g")
+}],
+"loop": true,
+"name": &"FootL",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"FootR",
+"speed": 5.0
+}]
