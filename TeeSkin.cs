@@ -5,6 +5,7 @@ public partial class TeeSkin : Node2D
 {
 	[Export]
 	public Texture2D skinTexture;
+	//纹理区域格式
 	public Rect2I BodyRect = new(0, 0, 64, 64);
 	public Rect2I[] EyesRect = [new Rect2I(0, 64, 64, 64), new Rect2I(64, 64, 64, 64), new Rect2I(128, 64, 64, 64)];
 	public Rect2I[] FootLRect = [new Rect2I(0, 128, 64, 64), new Rect2I(64, 128, 64, 64), new Rect2I(128, 128, 64, 64)];
@@ -34,6 +35,7 @@ public partial class TeeSkin : Node2D
 		var spriteframes = new SpriteFrames();
 		for (int i = 0; i < rects.Length; i++)
 		{
+			//剪切纹理(Texture2D)并添加为帧(SpriteFrame)
 			var image = texture.GetImage();
 			var cutImage = image.GetRegion(rects[i]);
 			spriteframes.AddFrame("default", ImageTexture.CreateFromImage(cutImage));

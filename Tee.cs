@@ -3,6 +3,7 @@ using System;
 
 public partial class Tee : CharacterBody2D
 {
+	//移动属性
 	[Export]
 	public float Speed = 300;
 	[Export]
@@ -11,13 +12,13 @@ public partial class Tee : CharacterBody2D
 	public float DodgeSpeed = 1000;
 	[Export]
 	public float Gravity = 40;
-	public Label StateLabel = new();
-	private Vector2 _velocity = new(0, 0);
-	private Vector2 gravityAcc = new(0, 0);
-	public int MaxJumpCount = 1;
+	public Label StateLabel = new();	//跟随人物的标签
+	private Vector2 _velocity = new(0, 0);//受控制速度（不包括重力）
+	private Vector2 gravityAcc = new(0, 0);//重力效果速度
+	public int MaxJumpCount = 1;//最多跳跃的次数（实际为二段跳）
 	private int JumpCount = 0;
-	private bool IsJumping = false;
-	public int MaxDodgeCount = 1;
+	private bool IsJumping = false;//腾空标志，用于控制释放跳跃键时的处理
+	public int MaxDodgeCount = 1;	//最多闪避的次数
 	private int DodgeCount = 0;
 	public override void _Ready()
 	{
@@ -25,38 +26,43 @@ public partial class Tee : CharacterBody2D
 	}
 	public override void _PhysicsProcess(double delta)
 	{
+		//跳跃状态检测
 		if (IsOnFloor())
 		{
+			//在地面时重置重力效果，并重置跳跃和闪避次数
 			gravityAcc = new Vector2(0, 0);
 			JumpCount = MaxJumpCount;
 			DodgeCount = MaxDodgeCount;
 		}
 		else
 		{
+			//腾空达到最高点时修复抛物线曲线
 			if (IsJumping && Velocity.Y >= -Gravity / 2 && Velocity.Y <= Gravity / 2)
 			{
 				gravityAcc = new Vector2(0, 0);
 				_velocity.Y = 0;
 				IsJumping = false;
 			}
+			//腾空时施加重力加速度
 			gravityAcc += new Vector2(0, Gravity);
 		}
+		//贴墙时重置跳跃次数，实现登墙跳
 		if (IsOnWall())
 		{
 			JumpCount = MaxJumpCount;
 		}
-
+		//更新速度
 		Velocity = _velocity + gravityAcc;
 		MoveAndSlide();
-
+		//更新状态标签
 		StateLabel.Text = $"{Velocity}";
-
+		//调出地图时回到起始点
 		if (Position.Y > 2000)
 		{
 			Position = new Vector2(415, 376);
 		}
 	}
-	public override void _ShortcutInput(InputEvent @event)
+	public override void _Input(InputEvent @event)
 	{
 		if (@event is InputEventKey eventKey)
 		{
@@ -73,19 +79,22 @@ public partial class Tee : CharacterBody2D
 
 				if (eventKey.IsActionPressed("jump") && JumpCount > 0)
 				{
+					//按下“跳跃”键时，改变Y方向速度，重置重力并减少跳跃次数，腾空标志改为true
 					_velocity += new Vector2(0, -JumpSpeed);
 					gravityAcc = new Vector2(0, 0);
 					JumpCount--;
 					IsJumping = true;
 				}
-				if (eventKey.IsActionPressed("dodge"))
+				if (eventKey.IsActionPressed("dodge") && DodgeCount > 0)
 				{
+					//按下“闪避”键时，改变X方向速度，并在0.1秒后复原
 					var acc = _velocity.X > 0 ? DodgeSpeed : -DodgeSpeed;
 					_velocity.X += acc;
 					GetTree().CreateTimer(0.1f, false).Timeout += () =>
 					{
 						_velocity.X -= acc;
 					};
+					DodgeCount--;
 				}
 			}
 			else
@@ -100,12 +109,10 @@ public partial class Tee : CharacterBody2D
 				}
 				if (eventKey.IsActionReleased("jump") && IsJumping)
 				{
+					//腾空并松开“跳跃”键时，重置Y方向速度和重力，腾空标志改为false
 					_velocity.Y = 100;
 					IsJumping = false;
-					if (Velocity.Y < 0)
-					{
-						gravityAcc = new Vector2(0, 0);
-					}
+					gravityAcc = new Vector2(0, 0);
 				}
 			}
 		}
