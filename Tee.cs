@@ -24,8 +24,6 @@ public partial class Tee : CharacterBody2D
 	public TeeSkin teeSkin; //皮肤节点
 	public Node2D Hand; //手节点
 	public Weapon weapon; //武器节点
-	private float _PressTime = 0; //按下按键的时间
-	private bool _IsPressing = false; //是否正在按下按键
 	public int MaxJumpCount = 1;//最多跳跃的次数（实际为二段跳）
 	private int JumpCount = 0;
 	private bool IsJumping = false;//腾空标志，用于控制释放跳跃键时的处理
@@ -76,7 +74,7 @@ public partial class Tee : CharacterBody2D
 		Velocity = _velocity + gravityAcc;
 		MoveAndSlide();
 		//更新状态标签
-		StateLabel.Text = $"{_PressTime > LongAttckTime}";
+		StateLabel.Text = $"";
 		//调出地图时回到起始点
 		if (Position.Y > 2000)
 		{
@@ -90,11 +88,6 @@ public partial class Tee : CharacterBody2D
 		//更新手节点位置和角度
 		Hand.Position = GetLocalMousePosition().Normalized() * 20f;
 		Hand.Rotation = GetLocalMousePosition().Angle();
-		//按键按下时间记录
-		if (_IsPressing)
-		{
-			_PressTime += (float)delta;
-		}
 	}
 	public override void _Input(InputEvent @event)
 	{
@@ -156,31 +149,6 @@ public partial class Tee : CharacterBody2D
 			else
 			{
 				SetFoot(true);
-			}
-		}
-		if (@event is InputEventMouse eventMouse)
-		{
-			if (@event.IsActionPressed("attack"))
-			{
-				//按下攻击时重置按键时间并将按键标识置为true
-				_PressTime = 0;
-				_IsPressing = true;
-			}
-			if (@event.IsActionReleased("attack"))
-			{
-				//松开攻击时将按键标识置为false
-				_IsPressing = false;
-				if (_PressTime < LongAttckTime)//长按时间超过LongAttckTime
-				{
-					//短攻击
-					weapon.ShortAttck();
-				}
-				else
-				{
-					//长攻击
-					weapon.LongAttck();
-				}
-				_PressTime = 0;//修复长按表现
 			}
 		}
 	}

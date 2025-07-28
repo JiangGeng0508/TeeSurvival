@@ -3,9 +3,9 @@ using System;
 
 public partial class Scarecrows : RigidBody2D, IHitableEntity
 {
-	public void OnHit(Node2D sender, float damage)
+	public void OnHit(Vector2 direction, float damage)
 	{
-		GD.Print($"{Name} Hitted by {sender.Name}");
+		ApplyCentralImpulse(direction * damage * 10f);
 		AddChild(new FloatingLabel($"-{damage}"));
 	}
 }
