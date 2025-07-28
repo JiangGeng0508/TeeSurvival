@@ -25,4 +25,10 @@ limit_smoothed = true
 position_smoothing_enabled = true
 
 [node name="Scarecrows" parent="." instance=ExtResource("3_r0du0")]
-position = Vector2(734, 354)
+position = Vector2(750, 352)
+
+[node name="Scarecrows2" parent="." instance=ExtResource("3_r0du0")]
+position = Vector2(750, 282)
+
+[node name="Scarecrows3" parent="." instance=ExtResource("3_r0du0")]
+position = Vector2(750, 208)

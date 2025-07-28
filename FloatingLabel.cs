@@ -2,9 +2,9 @@ using Godot;
 
 public partial class FloatingLabel(string text) : Label
 {
-	public Vector2 InitSpeed = new(0, -10);
-	public Vector2 Speed = new(0, -10);
-	public Vector2 Acc = new(0, 0.5f);
+	public Vector2 InitSpeed = new(0, -100);
+	public Vector2 Speed = new(0, -100);
+	public Vector2 Acc = new(0, 10f);
 	public float Lifetime = 0.5f;
 	public override void _Ready()
 	{
