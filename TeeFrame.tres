@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=11 format=3 uid="uid://bymbs8rg05beh"]
+[gd_resource type="SpriteFrames" load_steps=14 format=3 uid="uid://bymbs8rg05beh"]
 
 [ext_resource type="Texture2D" uid="uid://g158ngahyedr" path="res://TeeSurviver-Sheet.png" id="1_0y5bm"]
 
@@ -37,6 +37,18 @@ region = Rect2(64, 128, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_8284g"]
 atlas = ExtResource("1_0y5bm")
 region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0y5bm"]
+atlas = ExtResource("1_0y5bm")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_at36p"]
+atlas = ExtResource("1_0y5bm")
+region = Rect2(64, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_640ep"]
+atlas = ExtResource("1_0y5bm")
+region = Rect2(128, 192, 64, 64)
 
 [resource]
 animations = [{
@@ -82,7 +94,16 @@ animations = [{
 "name": &"FootL",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0y5bm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_at36p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_640ep")
+}],
 "loop": true,
 "name": &"FootR",
 "speed": 5.0

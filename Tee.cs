@@ -12,17 +12,26 @@ public partial class Tee : CharacterBody2D
 	public float DodgeSpeed = 1000;
 	[Export]
 	public float Gravity = 40;
-	public Label StateLabel = new();	//跟随人物的标签
+	[Export]
+	public Texture2D teeSkinTexture;
+	public Line2D CursorLine; //光标指示线
+	public Sprite2D CursorMarker; //光标指示点
+	public Label StateLabel;    //跟随人物的标签
 	private Vector2 _velocity = new(0, 0);//受控制速度（不包括重力）
 	private Vector2 gravityAcc = new(0, 0);//重力效果速度
+	public TeeSkin teeSkin; //皮肤节点
 	public int MaxJumpCount = 1;//最多跳跃的次数（实际为二段跳）
 	private int JumpCount = 0;
 	private bool IsJumping = false;//腾空标志，用于控制释放跳跃键时的处理
-	public int MaxDodgeCount = 1;	//最多闪避的次数
+	public int MaxDodgeCount = 1;   //最多闪避的次数
 	private int DodgeCount = 0;
 	public override void _Ready()
 	{
-		AddChild(StateLabel);
+		StateLabel = GetNode<Label>("StateLabel");
+		CursorLine = GetNode<Line2D>("CursorLine");
+		CursorMarker = GetNode<Sprite2D>("CursorMarker");
+		teeSkin = GetNode<TeeSkin>("TeeSkin");
+		teeSkin.skinTexture = teeSkinTexture is null? teeSkin.skinTexture : teeSkinTexture;
 	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -61,6 +70,11 @@ public partial class Tee : CharacterBody2D
 		{
 			Position = new Vector2(415, 376);
 		}
+		//控制眼睛偏移
+		teeSkin.EyesSprite.Position = GetLocalMousePosition().Normalized() * 3f;
+		//更新光标
+		CursorLine.Points = [Vector2.Zero, GetLocalMousePosition()];
+		CursorMarker.Position = GetLocalMousePosition();
 	}
 	public override void _Input(InputEvent @event)
 	{
@@ -96,6 +110,22 @@ public partial class Tee : CharacterBody2D
 					};
 					DodgeCount--;
 				}
+				if (eventKey.IsActionPressed("attack"))
+				{
+					bool shortAttack = true;
+					GetTree().CreateTimer(0.1f, false).Timeout += () =>
+					{
+						shortAttack = false;
+					};
+					if (shortAttack)
+					{
+						ShotAttck();
+					}
+					else
+					{
+						LongAttck();
+					}
+				}
 			}
 			else
 			{
@@ -115,6 +145,37 @@ public partial class Tee : CharacterBody2D
 					gravityAcc = new Vector2(0, 0);
 				}
 			}
+			if (_velocity.X > 10 || _velocity.X < -10)
+			{
+				SetFoot(false);
+			}
+			else
+			{
+				SetFoot(true);
+			}
+		}
+	}
+	public void ShotAttck()
+	{
+		GD.Print("ShotAttck");
+	}
+	public void LongAttck()
+	{
+		GD.Print("LongAttck");
+	}
+	public void SetFoot(bool idle)
+	{
+		if (idle)
+		{
+			teeSkin.FootLSprite.Stop();
+			teeSkin.FootRSprite.Stop();
+			teeSkin.FootLSprite.Frame = 0;
+			teeSkin.FootRSprite.Frame = 0;
+		}
+		else
+		{
+			teeSkin.FootLSprite.Play();
+			teeSkin.FootRSprite.Play();
 		}
 	}
 }
