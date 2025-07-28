@@ -14,6 +14,7 @@ public partial class FloatingLabel(string text) : Label
 	}
 	public override void _PhysicsProcess(double delta)
 	{
+		//手动抛物线
 		Position += Speed * (float)delta;
 		Speed += Acc * (float)delta;
 	}

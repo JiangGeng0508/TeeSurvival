@@ -149,7 +149,7 @@ public partial class Tee : CharacterBody2D
 					gravityAcc = new Vector2(0, 0);
 				}
 			}
-			if (_velocity.X > 10 || _velocity.X < -10)
+			if (_velocity.X > 10 || _velocity.X < -10)//移动时启动动画
 			{
 				SetFoot(false);
 			}
@@ -162,21 +162,25 @@ public partial class Tee : CharacterBody2D
 		{
 			if (@event.IsActionPressed("attack"))
 			{
+				//按下攻击时重置按键时间并将按键标识置为true
 				_PressTime = 0;
 				_IsPressing = true;
 			}
 			if (@event.IsActionReleased("attack"))
 			{
+				//松开攻击时将按键标识置为false
 				_IsPressing = false;
-				if (_PressTime < LongAttckTime)
+				if (_PressTime < LongAttckTime)//长按时间超过LongAttckTime
 				{
+					//短攻击
 					weapon.ShortAttck();
 				}
 				else
 				{
+					//长攻击
 					weapon.LongAttck();
 				}
-				_PressTime = 0;
+				_PressTime = 0;//修复长按表现
 			}
 		}
 	}

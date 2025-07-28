@@ -12,14 +12,14 @@ public partial class Weapon : Node2D
 		Sword = GetNode<Sprite2D>("Sword");
 		GetNode<CollisionPolygon2D>("Area2D/CollisionPolygon2D").Polygon = AttackArea.Polygon;
 	}
-	public void OnBodyEntered(Node2D body)
+	public void OnBodyEntered(Node2D body)//<-
 	{
 		if (body.HasMethod("OnHit"))
 		{
 			body.AddToGroup($"TouchedBodyBy{Name}");
 		}
 	}
-	public void OnBodyExited(Node2D body)
+	public void OnBodyExited(Node2D body)//<-
 	{
 		if (body.IsInGroup($"TouchedBodyBy{Name}"))
 		{
@@ -35,6 +35,9 @@ public partial class Weapon : Node2D
 	}
 	public void LongAttck()
 	{
-
+		foreach (Node2D body in GetTree().GetNodesInGroup($"TouchedBodyBy{Name}").Cast<Node2D>())
+		{
+			body.Call("OnHit", this, GD.Randf()*500);
+		}
 	}
 }
