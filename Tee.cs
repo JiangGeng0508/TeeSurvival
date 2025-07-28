@@ -20,6 +20,8 @@ public partial class Tee : CharacterBody2D
 	private Vector2 _velocity = new(0, 0);//受控制速度（不包括重力）
 	private Vector2 gravityAcc = new(0, 0);//重力效果速度
 	public TeeSkin teeSkin; //皮肤节点
+	private float _PressTime = 0; //按下按键的时间
+	private bool _IsPressing = false; //是否正在按下按键
 	public int MaxJumpCount = 1;//最多跳跃的次数（实际为二段跳）
 	private int JumpCount = 0;
 	private bool IsJumping = false;//腾空标志，用于控制释放跳跃键时的处理
@@ -75,6 +77,11 @@ public partial class Tee : CharacterBody2D
 		//更新光标
 		CursorLine.Points = [Vector2.Zero, GetLocalMousePosition()];
 		CursorMarker.Position = GetLocalMousePosition();
+		//按键按下时间记录
+		if (_IsPressing)
+		{
+			_PressTime += (float)delta;
+		}
 	}
 	public override void _Input(InputEvent @event)
 	{
@@ -110,22 +117,6 @@ public partial class Tee : CharacterBody2D
 					};
 					DodgeCount--;
 				}
-				if (eventKey.IsActionPressed("attack"))
-				{
-					bool shortAttack = true;
-					GetTree().CreateTimer(0.1f, false).Timeout += () =>
-					{
-						shortAttack = false;
-					};
-					if (shortAttack)
-					{
-						ShotAttck();
-					}
-					else
-					{
-						LongAttck();
-					}
-				}
 			}
 			else
 			{
@@ -154,12 +145,32 @@ public partial class Tee : CharacterBody2D
 				SetFoot(true);
 			}
 		}
+		if (@event is InputEventMouse eventMouse)
+		{
+			if (@event.IsActionPressed("attack"))
+			{
+				_PressTime = 0;
+				_IsPressing = true;
+			}
+			if (@event.IsActionReleased("attack"))
+			{
+				_IsPressing = false;
+				if (_PressTime < 0.2f)
+				{
+					ShortAttck();
+				}
+				else
+				{
+					LongAttck();
+				}
+			}
+		}
 	}
-	public void ShotAttck()
+	public virtual void ShortAttck()
 	{
-		GD.Print("ShotAttck");
+		GD.Print("ShortAttck");
 	}
-	public void LongAttck()
+	public virtual void LongAttck()
 	{
 		GD.Print("LongAttck");
 	}
