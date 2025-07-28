@@ -14,12 +14,16 @@ public partial class Tee : CharacterBody2D
 	public float Gravity = 40;
 	[Export]
 	public Texture2D teeSkinTexture;
+	[Export]
+	public float LongAttckTime = 0.3f;
 	public Line2D CursorLine; //光标指示线
 	public Sprite2D CursorMarker; //光标指示点
 	public Label StateLabel;    //跟随人物的标签
 	private Vector2 _velocity = new(0, 0);//受控制速度（不包括重力）
 	private Vector2 gravityAcc = new(0, 0);//重力效果速度
 	public TeeSkin teeSkin; //皮肤节点
+	public Node2D Hand; //手节点
+	public Weapon weapon; //武器节点
 	private float _PressTime = 0; //按下按键的时间
 	private bool _IsPressing = false; //是否正在按下按键
 	public int MaxJumpCount = 1;//最多跳跃的次数（实际为二段跳）
@@ -33,7 +37,9 @@ public partial class Tee : CharacterBody2D
 		CursorLine = GetNode<Line2D>("CursorLine");
 		CursorMarker = GetNode<Sprite2D>("CursorMarker");
 		teeSkin = GetNode<TeeSkin>("TeeSkin");
-		teeSkin.skinTexture = teeSkinTexture is null? teeSkin.skinTexture : teeSkinTexture;
+		teeSkin.skinTexture = teeSkinTexture is null ? teeSkin.skinTexture : teeSkinTexture;
+		Hand = GetNode<Node2D>("Hand");
+		weapon = GetNode<Weapon>("Hand/Weapon");
 	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -61,12 +67,16 @@ public partial class Tee : CharacterBody2D
 		if (IsOnWall())
 		{
 			JumpCount = MaxJumpCount;
+			if (_velocity.X != 0 && Velocity.Y > 100)
+			{
+				gravityAcc -= new Vector2(0, Gravity * 0.5f);
+			} 
 		}
 		//更新速度
 		Velocity = _velocity + gravityAcc;
 		MoveAndSlide();
 		//更新状态标签
-		StateLabel.Text = $"{Velocity}";
+		StateLabel.Text = $"{_PressTime > LongAttckTime}";
 		//调出地图时回到起始点
 		if (Position.Y > 2000)
 		{
@@ -77,6 +87,9 @@ public partial class Tee : CharacterBody2D
 		//更新光标
 		CursorLine.Points = [Vector2.Zero, GetLocalMousePosition()];
 		CursorMarker.Position = GetLocalMousePosition();
+		//更新手节点位置和角度
+		Hand.Position = GetLocalMousePosition().Normalized() * 20f;
+		Hand.Rotation = GetLocalMousePosition().Angle();
 		//按键按下时间记录
 		if (_IsPressing)
 		{
@@ -106,7 +119,7 @@ public partial class Tee : CharacterBody2D
 					JumpCount--;
 					IsJumping = true;
 				}
-				if (eventKey.IsActionPressed("dodge") && DodgeCount > 0)
+				if (eventKey.IsActionPressed("dodge") && DodgeCount > 0 && _velocity.X != 0)
 				{
 					//按下“闪避”键时，改变X方向速度，并在0.1秒后复原
 					var acc = _velocity.X > 0 ? DodgeSpeed : -DodgeSpeed;
@@ -155,24 +168,17 @@ public partial class Tee : CharacterBody2D
 			if (@event.IsActionReleased("attack"))
 			{
 				_IsPressing = false;
-				if (_PressTime < 0.2f)
+				if (_PressTime < LongAttckTime)
 				{
-					ShortAttck();
+					weapon.ShortAttck();
 				}
 				else
 				{
-					LongAttck();
+					weapon.LongAttck();
 				}
+				_PressTime = 0;
 			}
 		}
-	}
-	public virtual void ShortAttck()
-	{
-		GD.Print("ShortAttck");
-	}
-	public virtual void LongAttck()
-	{
-		GD.Print("LongAttck");
 	}
 	public void SetFoot(bool idle)
 	{

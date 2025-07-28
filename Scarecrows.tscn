@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://xj4y24nvj6fx"]
+
+[ext_resource type="Script" uid="uid://cabmwcqyxf0ig" path="res://Scarecrows.cs" id="1_5ma5i"]
+[ext_resource type="Texture2D" uid="uid://qxtl3fq2gnir" path="res://icon.svg" id="1_h1rpg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qw46b"]
+size = Vector2(64, 64)
+
+[node name="Scarecrows" type="RigidBody2D"]
+input_pickable = true
+script = ExtResource("1_5ma5i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qw46b")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_h1rpg")
