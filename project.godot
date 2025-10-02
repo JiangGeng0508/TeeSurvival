@@ -15,6 +15,10 @@ run/main_scene="uid://bhlafme7wjqod"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+AttributesManager="*res://AttributesManager.cs"
+
 [display]
 
 window/size/viewport_width=1280
@@ -66,3 +70,4 @@ dodge={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+textures/canvas_textures/default_texture_repeat=1

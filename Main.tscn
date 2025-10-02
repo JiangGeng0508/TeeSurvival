@@ -18,12 +18,6 @@ input_pickable = true
 floor_snap_length = 4.0
 platform_wall_layers = 1
 
-[node name="Camera2D" type="Camera2D" parent="Tee"]
-zoom = Vector2(1.5, 1.5)
-limit_bottom = 2000
-limit_smoothed = true
-position_smoothing_enabled = true
-
 [node name="Scarecrows" parent="." instance=ExtResource("3_r0du0")]
 position = Vector2(750, 352)
 

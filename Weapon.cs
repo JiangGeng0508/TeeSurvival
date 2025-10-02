@@ -5,6 +5,7 @@ public partial class Weapon : Node2D
 {
 	[Signal]
 	public delegate void PressTimeEventHandler(float percentage);
+	[Signal]public delegate void HitSomethingEventHandler();
 	
 	private Node2D[] _touchedBody;
 	private Polygon2D _attackArea;
@@ -38,27 +39,15 @@ public partial class Weapon : Node2D
 			body.RemoveFromGroup($"TouchedBodyBy{Name}");
 		}
 	}
-	private void ShortAttack()
+
+	private void Attack(float damage)
 	{
+		if(GetTree().GetNodeCountInGroup($"TouchedBodyBy{Name}") == 0) return;
 		foreach (var body in GetTree().GetNodesInGroup($"TouchedBodyBy{Name}").Cast<Node2D>())
 		{
-			body.Call("OnHit", (GetGlobalMousePosition() - GlobalPosition).Normalized(), GD.Randf() * 20 + 20);
+			body.Call("OnHit", (GetGlobalMousePosition() - GlobalPosition).Normalized(), damage);
 		}
-		// tween = CreateTween();
-		// tween.TweenProperty(Sword, "rotation", -Mathf.Pi / 4, 0.1f);
-		// tween.TweenProperty(Sword, "rotation", Mathf.Pi / 4, 0.3f);
-		// tween.TweenProperty(Sword, "rotation", 0, 0.1f);
-	}
-	private void LongAttack()
-	{
-		foreach (var body in GetTree().GetNodesInGroup($"TouchedBodyBy{Name}").Cast<Node2D>())
-		{
-			body.Call("OnHit", (GetGlobalMousePosition() - GlobalPosition).Normalized(), GD.Randf() * 100 + 100);
-		}
-		// tween = CreateTween();
-		// tween.TweenProperty(Sword, "rotation", -Mathf.Pi / 4, 0.1f);
-		// tween.TweenProperty(Sword, "rotation", Mathf.Pi / 4, 0.3f);
-		// tween.TweenProperty(Sword, "rotation", 0, 0.1f);
+		EmitSignalHitSomething();
 	}
 	public override void _Input(InputEvent @event)
 	{
@@ -77,12 +66,12 @@ public partial class Weapon : Node2D
 				if (_pressTime < _longAttackTime)//长按时间超过LongAttckTime
 				{
 					//短攻击
-					ShortAttack();
+					Attack(GD.Randf() * 20 + 20);
 				}
 				else
 				{
 					//长攻击
-					LongAttack();
+					Attack(GD.Randf() * 100 + 100);
 				}
 				_pressTime = 0;//修复长按表现
 			}

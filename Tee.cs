@@ -3,10 +3,10 @@ using Godot;
 public partial class Tee : CharacterBody2D
 {
 	//移动属性
-	[Export] public float Speed = 300;
-	[Export] public float JumpSpeed = 800;
-	[Export] public float DodgeSpeed = 1000;
-	[Export] public float Gravity = 40;
+	[Export] public float Speed = 300f;
+	[Export] public float JumpSpeed = 800f;
+	[Export] public float DodgeSpeed = 1000f;
+	[Export] public float Gravity = 40f;
 	[Export] public float MaxFallSpeed = 400f;
 	[Export] public Texture2D TeeSkinTexture;
 	[Export] public float LongAttackTime = 0.3f;

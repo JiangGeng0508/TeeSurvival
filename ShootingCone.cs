@@ -32,7 +32,7 @@ public partial class ShootingCone : ColorRect
         _material.SetShaderParameter("cone_scale", ConeScale);
         _material.SetShaderParameter("custom_color", CustomColor);
 
-        Position = Size * Scale / 2;
+        Position = - Size * Scale / 2;
     }
 
     public void OnPressTime(float percentage)

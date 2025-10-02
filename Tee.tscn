@@ -43,3 +43,10 @@ offset_bottom = 23.0
 [node name="Hand" type="Node2D" parent="."]
 
 [node name="Weapon" parent="Hand" instance=ExtResource("5_nbj7y")]
+metadata/_edit_group_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+limit_bottom = 2000
+limit_smoothed = true
+position_smoothing_enabled = true
