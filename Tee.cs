@@ -7,10 +7,8 @@ public partial class Tee : CharacterBody2D
 	[Export] public float JumpSpeed = 800f;
 	[Export] public float DodgeSpeed = 1000f;
 	[Export] public float Gravity = 40f;
-	[Export] public float MaxFallSpeed = 400f;
 	[Export] public Texture2D TeeSkinTexture;
 	[Export] public float LongAttackTime = 0.3f;
-	[Export] public float JumpTime = 0.5f;
 	
 	private Line2D _cursorLine; //光标指示线
 	private Sprite2D _cursorMarker; //光标指示点
@@ -23,7 +21,6 @@ public partial class Tee : CharacterBody2D
 	private int _maxJumpCount = 1;//最多跳跃的次数（实际为二段跳）
 	private int _jumpCount = 0;
 	private bool _isJumping = false;//腾空标志，用于控制释放跳跃键时的处理
-	private float _jumpingTime = 0f;
 	private int _maxDodgeCount = 1;   //最多闪避的次数
 	private int _dodgeCount = 0;
 	public override void _Ready()
@@ -49,7 +46,7 @@ public partial class Tee : CharacterBody2D
 		else
 		{
 			//腾空达到最高点时修复抛物线曲线
-			if (_isJumping && (Mathf.Abs(Velocity.Y) <= Gravity / 2 || _jumpingTime <= 0f))
+			if (_isJumping && Mathf.Abs(Velocity.Y) <= Gravity)
 			{
 				_gravityAcc = new Vector2(0, 0);
 				_moveVelocity.Y = 0;
@@ -57,11 +54,8 @@ public partial class Tee : CharacterBody2D
 				GD.Print("跳跃结束");
 			}
 
-			_jumpingTime -= (float)delta;
-			GD.Print(_jumpingTime);
 			//腾空时施加重力加速度
 			_gravityAcc += new Vector2(0, Gravity);
-			_gravityAcc.Y = Mathf.Clamp(_gravityAcc.Y, -MaxFallSpeed, MaxFallSpeed);
 			
 		}
 		//贴墙时重置跳跃次数，实现登墙跳
@@ -75,6 +69,7 @@ public partial class Tee : CharacterBody2D
 		}
 		//更新速度
 		Velocity = _moveVelocity + _gravityAcc;
+		if(Velocity.Y > 1000f) Velocity = new Vector2(Velocity.X,1000f);
 		MoveAndSlide();
 		//更新状态标签
 		_stateLabel.Text = $"";
@@ -114,7 +109,6 @@ public partial class Tee : CharacterBody2D
 					_gravityAcc = new Vector2(0, 0);
 					_jumpCount--;
 					_isJumping = true;
-					_jumpingTime = JumpTime;
 				}
 				if (eventKey.IsActionPressed("dodge") && _dodgeCount > 0 && _moveVelocity.X != 0)
 				{
@@ -144,17 +138,9 @@ public partial class Tee : CharacterBody2D
 					_moveVelocity.Y = 100;
 					_isJumping = false;
 					_gravityAcc = new Vector2(0, 0);
-					_jumpingTime = 0f;
 				}
 			}
-			if (_moveVelocity.X > 10 || _moveVelocity.X < -10)//移动时启动动画
-			{
-				SetFoot(false);
-			}
-			else
-			{
-				SetFoot(true);
-			}
+			SetFoot(!(Mathf.Abs(_moveVelocity.X) > 10));
 		}
 	}
 	public void SetFoot(bool idle)

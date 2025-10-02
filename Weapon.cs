@@ -20,10 +20,6 @@ public partial class Weapon : Node2D
 		_weaponCollision = GetNode<CollisionPolygon2D>("Area2D/CollisionPolygon2D");
 		// GetNode<CollisionPolygon2D>("Area2D/CollisionPolygon2D").Polygon = _attackArea.Polygon;
 		
-		// tween = CreateTween();
-		// tween.TweenProperty(Sword, "rotation", -Mathf.Pi / 4, 0.1f);
-		// tween.TweenProperty(Sword, "rotation", Mathf.Pi / 4, 0.3f);
-		// tween.TweenProperty(Sword, "rotation", 0, 0.1f);
 	}
 	public void OnBodyEntered(Node2D body)//<-
 	{
