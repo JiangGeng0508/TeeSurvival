@@ -86,7 +86,7 @@ public partial class Tee : CharacterBody2D
 		CursorLine.Points = [Vector2.Zero, GetLocalMousePosition()];
 		CursorMarker.Position = GetLocalMousePosition();
 		//更新手节点位置和角度
-		Hand.Position = GetLocalMousePosition().Normalized() * 20f;
+		// Hand.Position = GetLocalMousePosition().Normalized() * 20f;
 		Hand.Rotation = GetLocalMousePosition().Angle();
 	}
 	public override void _Input(InputEvent @event)
