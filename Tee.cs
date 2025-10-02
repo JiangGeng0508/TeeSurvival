@@ -1,43 +1,40 @@
 using Godot;
-using System;
 
 public partial class Tee : CharacterBody2D
 {
 	//移动属性
-	[Export]
-	public float Speed = 300;
-	[Export]
-	public float JumpSpeed = 800;
-	[Export]
-	public float DodgeSpeed = 1000;
-	[Export]
-	public float Gravity = 40;
-	[Export]
-	public Texture2D teeSkinTexture;
-	[Export]
-	public float LongAttckTime = 0.3f;
-	public Line2D CursorLine; //光标指示线
-	public Sprite2D CursorMarker; //光标指示点
-	public Label StateLabel;    //跟随人物的标签
-	private Vector2 _velocity = new(0, 0);//受控制速度（不包括重力）
-	private Vector2 gravityAcc = new(0, 0);//重力效果速度
-	public TeeSkin teeSkin; //皮肤节点
-	public Node2D Hand; //手节点
-	public Weapon weapon; //武器节点
-	public int MaxJumpCount = 1;//最多跳跃的次数（实际为二段跳）
-	private int JumpCount = 0;
-	private bool IsJumping = false;//腾空标志，用于控制释放跳跃键时的处理
-	public int MaxDodgeCount = 1;   //最多闪避的次数
-	private int DodgeCount = 0;
+	[Export] public float Speed = 300;
+	[Export] public float JumpSpeed = 800;
+	[Export] public float DodgeSpeed = 1000;
+	[Export] public float Gravity = 40;
+	[Export] public float MaxFallSpeed = 400f;
+	[Export] public Texture2D TeeSkinTexture;
+	[Export] public float LongAttackTime = 0.3f;
+	[Export] public float JumpTime = 0.5f;
+	
+	private Line2D _cursorLine; //光标指示线
+	private Sprite2D _cursorMarker; //光标指示点
+	private Label _stateLabel;    //跟随人物的标签
+	private Vector2 _moveVelocity = new(0, 0);//受控制速度（不包括重力）
+	private Vector2 _gravityAcc = new(0, 0);//重力效果速度
+	private TeeSkin _teeSkin; //皮肤节点
+	private Node2D _hand; //手节点
+	private Weapon _weapon; //武器节点
+	private int _maxJumpCount = 1;//最多跳跃的次数（实际为二段跳）
+	private int _jumpCount = 0;
+	private bool _isJumping = false;//腾空标志，用于控制释放跳跃键时的处理
+	private float _jumpingTime = 0f;
+	private int _maxDodgeCount = 1;   //最多闪避的次数
+	private int _dodgeCount = 0;
 	public override void _Ready()
 	{
-		StateLabel = GetNode<Label>("StateLabel");
-		CursorLine = GetNode<Line2D>("CursorLine");
-		CursorMarker = GetNode<Sprite2D>("CursorMarker");
-		teeSkin = GetNode<TeeSkin>("TeeSkin");
-		teeSkin.skinTexture = teeSkinTexture is null ? teeSkin.skinTexture : teeSkinTexture;
-		Hand = GetNode<Node2D>("Hand");
-		weapon = GetNode<Weapon>("Hand/Weapon");
+		_stateLabel = GetNode<Label>("StateLabel");
+		_cursorLine = GetNode<Line2D>("CursorLine");
+		_cursorMarker = GetNode<Sprite2D>("CursorMarker");
+		_teeSkin = GetNode<TeeSkin>("TeeSkin");
+		if (TeeSkinTexture != null) _teeSkin.skinTexture = TeeSkinTexture;
+		_hand = GetNode<Node2D>("Hand");
+		_weapon = GetNode<Weapon>("Hand/Weapon");
 	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -45,49 +42,55 @@ public partial class Tee : CharacterBody2D
 		if (IsOnFloor())
 		{
 			//在地面时重置重力效果，并重置跳跃和闪避次数
-			gravityAcc = new Vector2(0, 0);
-			JumpCount = MaxJumpCount;
-			DodgeCount = MaxDodgeCount;
+			_gravityAcc = new Vector2(0, 0);
+			_jumpCount = _maxJumpCount;
+			_dodgeCount = _maxDodgeCount;
 		}
 		else
 		{
 			//腾空达到最高点时修复抛物线曲线
-			if (IsJumping && Velocity.Y >= -Gravity / 2 && Velocity.Y <= Gravity / 2)
+			if (_isJumping && (Mathf.Abs(Velocity.Y) <= Gravity / 2 || _jumpingTime <= 0f))
 			{
-				gravityAcc = new Vector2(0, 0);
-				_velocity.Y = 0;
-				IsJumping = false;
+				_gravityAcc = new Vector2(0, 0);
+				_moveVelocity.Y = 0;
+				_isJumping = false;
+				GD.Print("跳跃结束");
 			}
+
+			_jumpingTime -= (float)delta;
+			GD.Print(_jumpingTime);
 			//腾空时施加重力加速度
-			gravityAcc += new Vector2(0, Gravity);
+			_gravityAcc += new Vector2(0, Gravity);
+			_gravityAcc.Y = Mathf.Clamp(_gravityAcc.Y, -MaxFallSpeed, MaxFallSpeed);
+			
 		}
 		//贴墙时重置跳跃次数，实现登墙跳
 		if (IsOnWall())
 		{
-			JumpCount = MaxJumpCount;
-			if (_velocity.X != 0 && Velocity.Y > 100)
+			_jumpCount = _maxJumpCount;
+			if (_moveVelocity.X != 0 && Velocity.Y > 20)
 			{
-				gravityAcc -= new Vector2(0, Gravity * 0.5f);
+				_gravityAcc -= new Vector2(0, Gravity * 0.9f);
 			} 
 		}
 		//更新速度
-		Velocity = _velocity + gravityAcc;
+		Velocity = _moveVelocity + _gravityAcc;
 		MoveAndSlide();
 		//更新状态标签
-		StateLabel.Text = $"";
+		_stateLabel.Text = $"";
 		//调出地图时回到起始点
 		if (Position.Y > 2000)
 		{
 			Position = new Vector2(415, 376);
 		}
 		//控制眼睛偏移
-		teeSkin.EyesSprite.Position = GetLocalMousePosition().Normalized() * 3f;
+		_teeSkin.EyesSprite.Position = GetLocalMousePosition().Normalized() * 3f;
 		//更新光标
-		CursorLine.Points = [Vector2.Zero, GetLocalMousePosition()];
-		CursorMarker.Position = GetLocalMousePosition();
+		_cursorLine.Points = [Vector2.Zero, GetLocalMousePosition()];
+		_cursorMarker.Position = GetLocalMousePosition();
 		//更新手节点位置和角度
 		// Hand.Position = GetLocalMousePosition().Normalized() * 20f;
-		Hand.Rotation = GetLocalMousePosition().Angle();
+		_hand.Rotation = GetLocalMousePosition().Angle();
 	}
 	public override void _Input(InputEvent @event)
 	{
@@ -97,52 +100,54 @@ public partial class Tee : CharacterBody2D
 			{
 				if (eventKey.IsActionPressed("move_left"))
 				{
-					_velocity += new Vector2(-Speed, 0);
+					_moveVelocity += new Vector2(-Speed, 0);
 				}
 				if (eventKey.IsActionPressed("move_right"))
 				{
-					_velocity += new Vector2(Speed, 0);
+					_moveVelocity += new Vector2(Speed, 0);
 				}
 
-				if (eventKey.IsActionPressed("jump") && JumpCount > 0)
+				if (eventKey.IsActionPressed("jump") && _jumpCount > 0)
 				{
 					//按下“跳跃”键时，改变Y方向速度，重置重力并减少跳跃次数，腾空标志改为true
-					_velocity += new Vector2(0, -JumpSpeed);
-					gravityAcc = new Vector2(0, 0);
-					JumpCount--;
-					IsJumping = true;
+					_moveVelocity += new Vector2(0, -JumpSpeed);
+					_gravityAcc = new Vector2(0, 0);
+					_jumpCount--;
+					_isJumping = true;
+					_jumpingTime = JumpTime;
 				}
-				if (eventKey.IsActionPressed("dodge") && DodgeCount > 0 && _velocity.X != 0)
+				if (eventKey.IsActionPressed("dodge") && _dodgeCount > 0 && _moveVelocity.X != 0)
 				{
 					//按下“闪避”键时，改变X方向速度，并在0.1秒后复原
-					var acc = _velocity.X > 0 ? DodgeSpeed : -DodgeSpeed;
-					_velocity.X += acc;
+					var acc = _moveVelocity.X > 0 ? DodgeSpeed : -DodgeSpeed;
+					_moveVelocity.X += acc;
 					GetTree().CreateTimer(0.1f, false).Timeout += () =>
 					{
-						_velocity.X -= acc;
+						_moveVelocity.X -= acc;
 					};
-					DodgeCount--;
+					_dodgeCount--;
 				}
 			}
 			else
 			{
 				if (eventKey.IsActionReleased("move_left"))
 				{
-					_velocity += new Vector2(Speed, 0);
+					_moveVelocity += new Vector2(Speed, 0);
 				}
 				if (eventKey.IsActionReleased("move_right"))
 				{
-					_velocity += new Vector2(-Speed, 0);
+					_moveVelocity += new Vector2(-Speed, 0);
 				}
-				if (eventKey.IsActionReleased("jump") && IsJumping)
+				if (eventKey.IsActionReleased("jump") && _isJumping)
 				{
 					//腾空并松开“跳跃”键时，重置Y方向速度和重力，腾空标志改为false
-					_velocity.Y = 100;
-					IsJumping = false;
-					gravityAcc = new Vector2(0, 0);
+					_moveVelocity.Y = 100;
+					_isJumping = false;
+					_gravityAcc = new Vector2(0, 0);
+					_jumpingTime = 0f;
 				}
 			}
-			if (_velocity.X > 10 || _velocity.X < -10)//移动时启动动画
+			if (_moveVelocity.X > 10 || _moveVelocity.X < -10)//移动时启动动画
 			{
 				SetFoot(false);
 			}
@@ -156,15 +161,15 @@ public partial class Tee : CharacterBody2D
 	{
 		if (idle)
 		{
-			teeSkin.FootLSprite.Stop();
-			teeSkin.FootRSprite.Stop();
-			teeSkin.FootLSprite.Frame = 0;
-			teeSkin.FootRSprite.Frame = 0;
+			_teeSkin.FootLSprite.Stop();
+			_teeSkin.FootRSprite.Stop();
+			_teeSkin.FootLSprite.Frame = 0;
+			_teeSkin.FootRSprite.Frame = 0;
 		}
 		else
 		{
-			teeSkin.FootLSprite.Play();
-			teeSkin.FootRSprite.Play();
+			_teeSkin.FootLSprite.Play();
+			_teeSkin.FootRSprite.Play();
 		}
 	}
 }

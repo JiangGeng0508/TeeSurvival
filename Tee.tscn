@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://3cp3sg142x6n"]
+[gd_scene load_steps=7 format=3 uid="uid://3cp3sg142x6n"]
 
 [ext_resource type="PackedScene" uid="uid://c5i802i0ffn3t" path="res://TeeSkin.tscn" id="1_70jw6"]
 [ext_resource type="Script" uid="uid://c0sr8xio5meso" path="res://Tee.cs" id="1_j8wys"]
-[ext_resource type="Texture2D" uid="uid://g158ngahyedr" path="res://TeeSurviver-Sheet.png" id="2_xorkd"]
 [ext_resource type="Texture2D" uid="uid://ebhs8k5hqoxa" path="res://Cursor.png" id="3_3a3r4"]
 [ext_resource type="PackedScene" uid="uid://ow8oqlqwrmcd" path="res://Weapon.tscn" id="5_nbj7y"]
 [ext_resource type="Texture2D" uid="uid://bubk77y1y1mpo" path="res://TeeSurviver.png" id="6_dtt2j"]
@@ -12,7 +11,7 @@ size = Vector2(31.9, 31.9)
 
 [node name="Tee" type="CharacterBody2D"]
 script = ExtResource("1_j8wys")
-teeSkinTexture = ExtResource("2_xorkd")
+JumpTime = 0.3
 
 [node name="TeeSurviver" type="Sprite2D" parent="."]
 position = Vector2(0, -1)

@@ -17,7 +17,6 @@ position = Vector2(368, 403)
 input_pickable = true
 floor_snap_length = 4.0
 platform_wall_layers = 1
-LongAttckTime = 0.6
 
 [node name="Camera2D" type="Camera2D" parent="Tee"]
 zoom = Vector2(1.5, 1.5)
@@ -33,6 +32,12 @@ position = Vector2(750, 282)
 
 [node name="Scarecrows3" parent="." instance=ExtResource("3_r0du0")]
 position = Vector2(750, 208)
+
+[node name="Scarecrows4" parent="." instance=ExtResource("3_r0du0")]
+position = Vector2(960, 380)
+lock_rotation = true
+freeze = true
+Moveable = false
 
 [node name="Enemy" parent="." instance=ExtResource("4_cm0pq")]
 position = Vector2(1126, 384)
