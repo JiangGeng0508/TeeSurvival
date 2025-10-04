@@ -23,7 +23,9 @@ public partial class Tee : CharacterBody2D
 	private bool _isJumping = false;//腾空标志，用于控制释放跳跃键时的处理
 	private int _maxDodgeCount = 1;   //最多闪避的次数
 	private int _dodgeCount = 0;
-	private float axis = 0f;
+	private bool _dodgeFinished = true;
+	private float _axis = 0f;
+	private Vector2 _homePosition = Vector2.Zero;
 	public override void _Ready()
 	{
 		_stateLabel = GetNode<Label>("StateLabel");
@@ -33,6 +35,8 @@ public partial class Tee : CharacterBody2D
 		if (TeeSkinTexture != null) _teeSkin.skinTexture = TeeSkinTexture;
 		_hand = GetNode<Node2D>("Hand");
 		_weapon = GetNode<Weapon>("Hand/Weapon");
+
+		_homePosition = Position;
 	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -42,7 +46,8 @@ public partial class Tee : CharacterBody2D
 			//在地面时重置重力效果，并重置跳跃和闪避次数
 			_gravityAcc = new Vector2(0, 0);
 			_jumpCount = _maxJumpCount;
-			_dodgeCount = _maxDodgeCount;
+			if(_dodgeFinished) _dodgeCount = _maxDodgeCount;
+			
 		}
 		else
 		{
@@ -52,7 +57,6 @@ public partial class Tee : CharacterBody2D
 				_gravityAcc = new Vector2(0, 0);
 				_exVelocity.Y = 0;
 				_isJumping = false;
-				GD.Print("跳跃结束");
 			}
 
 			//腾空时施加重力加速度
@@ -69,30 +73,27 @@ public partial class Tee : CharacterBody2D
 			} 
 		}
 
-		var move = new Vector2(axis * Speed, 0);
+		var move = new Vector2(_axis * Speed, 0);
 		//更新速度
 		Velocity = move + _exVelocity + _gravityAcc;
-		if(Velocity.Y > 1000f) Velocity = new Vector2(Velocity.X,1000f);
 		MoveAndSlide();
-		//更新状态标签
-		_stateLabel.Text = $"";
-		//调出地图时回到起始点
-		if (Position.Y > 2000)
-		{
-			Position = new Vector2(415, 376);
-		}
-		//控制眼睛偏移
-		_teeSkin.EyesSprite.Position = GetLocalMousePosition().Normalized() * 3f;
+		
+		if(Velocity.Y > 1000f) Velocity = new Vector2(Velocity.X,1000f);
+		if (Position.Y > 2000f) Position = _homePosition;//掉出地图时回到起始点
+		
+		_stateLabel.Text = $"";//更新状态标签
+		
+		_teeSkin.EyesSprite.Position = GetLocalMousePosition().Normalized() * 3f;//控制眼睛偏移
 		//更新光标
 		_cursorLine.Points = [Vector2.Zero, GetLocalMousePosition()];
 		_cursorMarker.Position = GetLocalMousePosition();
 		//更新手节点位置和角度
-		// Hand.Position = GetLocalMousePosition().Normalized() * 20f;
+		_hand.Position = GetLocalMousePosition().Normalized() * 20f;
 		_hand.Rotation = GetLocalMousePosition().Angle();
 	}
 	public override void _Input(InputEvent @event)
 	{
-		axis = Input.GetAxis("move_left", "move_right");
+		_axis = Input.GetAxis("move_left", "move_right");
 		if (@event is InputEventKey eventKey)
 		{
 			if (eventKey.Pressed)
@@ -105,14 +106,15 @@ public partial class Tee : CharacterBody2D
 					_jumpCount--;
 					_isJumping = true;
 				}
-				if (eventKey.IsActionPressed("dodge") && _dodgeCount > 0 && _exVelocity.X != 0)
+				if (eventKey.IsActionPressed("dodge") && _dodgeCount > 0 && Velocity.X != 0)
 				{
 					//按下“闪避”键时，改变X方向速度，并在0.1秒后复原
-					var acc = _exVelocity.X > 0 ? DodgeSpeed : -DodgeSpeed;
+					var acc = Velocity.X > 0 ? DodgeSpeed : -DodgeSpeed;
 					_exVelocity.X += acc;
 					GetTree().CreateTimer(0.1f, false).Timeout += () =>
 					{
 						_exVelocity.X -= acc;
+						_dodgeFinished = true;
 					};
 					_dodgeCount--;
 				}
@@ -130,7 +132,7 @@ public partial class Tee : CharacterBody2D
 			SetFoot(!(Mathf.Abs(_exVelocity.X) > 10));
 		}
 	}
-	public void SetFoot(bool idle)
+	private void SetFoot(bool idle)
 	{
 		if (idle)
 		{
