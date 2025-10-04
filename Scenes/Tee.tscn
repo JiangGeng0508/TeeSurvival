@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://3cp3sg142x6n"]
 
-[ext_resource type="PackedScene" uid="uid://c5i802i0ffn3t" path="res://TeeSkin.tscn" id="1_70jw6"]
-[ext_resource type="Script" uid="uid://c0sr8xio5meso" path="res://Tee.cs" id="1_j8wys"]
-[ext_resource type="Texture2D" uid="uid://ebhs8k5hqoxa" path="res://Cursor.png" id="3_3a3r4"]
-[ext_resource type="PackedScene" uid="uid://ow8oqlqwrmcd" path="res://Weapon.tscn" id="5_nbj7y"]
-[ext_resource type="Texture2D" uid="uid://bubk77y1y1mpo" path="res://TeeSurviver.png" id="6_dtt2j"]
+[ext_resource type="PackedScene" uid="uid://c5i802i0ffn3t" path="res://Scenes/TeeSkin.tscn" id="1_70jw6"]
+[ext_resource type="Script" uid="uid://c0sr8xio5meso" path="res://Scripts/Tee.cs" id="1_j8wys"]
+[ext_resource type="Texture2D" uid="uid://ebhs8k5hqoxa" path="res://Assets/Cursor.png" id="3_3a3r4"]
+[ext_resource type="PackedScene" uid="uid://ow8oqlqwrmcd" path="res://Scenes/Weapon.tscn" id="5_nbj7y"]
+[ext_resource type="Texture2D" uid="uid://bubk77y1y1mpo" path="res://Assets/TeeSurviver.png" id="6_dtt2j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j8wys"]
 size = Vector2(31.9, 31.9)

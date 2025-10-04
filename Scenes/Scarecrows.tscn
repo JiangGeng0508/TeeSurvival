@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://xj4y24nvj6fx"]
 
-[ext_resource type="Script" uid="uid://cabmwcqyxf0ig" path="res://Scarecrows.cs" id="1_5ma5i"]
+[ext_resource type="Script" uid="uid://cabmwcqyxf0ig" path="res://Scripts/Scarecrows.cs" id="1_5ma5i"]
 [ext_resource type="Texture2D" uid="uid://qxtl3fq2gnir" path="res://icon.svg" id="1_h1rpg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qw46b"]

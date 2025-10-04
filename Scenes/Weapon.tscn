@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://ow8oqlqwrmcd"]
 
-[ext_resource type="Script" uid="uid://cchvmcr8kn8b3" path="res://Weapon.cs" id="1_2og4f"]
-[ext_resource type="PackedScene" uid="uid://5y67cnpphbg2" path="res://ShootingCone.tscn" id="3_a813o"]
-[ext_resource type="Shader" uid="uid://crvvgebme1gbr" path="res://shooting-cone.gdshader" id="3_ab8f4"]
+[ext_resource type="Script" uid="uid://cchvmcr8kn8b3" path="res://Scripts/Weapon.cs" id="1_2og4f"]
+[ext_resource type="PackedScene" uid="uid://5y67cnpphbg2" path="res://Scenes/ShootingCone.tscn" id="3_a813o"]
+[ext_resource type="Shader" uid="uid://crvvgebme1gbr" path="res://Scripts/shooting-cone.gdshader" id="3_ab8f4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_amow5"]
 resource_local_to_scene = true

@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=4 uid="uid://bhlafme7wjqod"]
 
-[ext_resource type="TileSet" uid="uid://bwr1y7spvb03w" path="res://MapTile.tres" id="1_glv2v"]
-[ext_resource type="PackedScene" uid="uid://3cp3sg142x6n" path="res://Tee.tscn" id="2_uu6xs"]
-[ext_resource type="PackedScene" uid="uid://xj4y24nvj6fx" path="res://Scarecrows.tscn" id="3_r0du0"]
-[ext_resource type="PackedScene" uid="uid://bwpd8hb17ieer" path="res://Enemy.tscn" id="4_cm0pq"]
+[ext_resource type="TileSet" uid="uid://bwr1y7spvb03w" path="res://Assets/MapTile.tres" id="1_glv2v"]
+[ext_resource type="PackedScene" uid="uid://3cp3sg142x6n" path="res://Scenes/Tee.tscn" id="2_uu6xs"]
+[ext_resource type="PackedScene" uid="uid://xj4y24nvj6fx" path="res://Scenes/Scarecrows.tscn" id="3_r0du0"]
+[ext_resource type="PackedScene" uid="uid://bwpd8hb17ieer" path="res://Scenes/Enemy.tscn" id="4_cm0pq"]
 
 [node name="Main" type="Node2D"]
 

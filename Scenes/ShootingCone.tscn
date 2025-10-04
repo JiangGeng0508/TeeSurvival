@@ -1,12 +1,12 @@
 [gd_scene load_steps=4 format=3 uid="uid://5y67cnpphbg2"]
 
-[ext_resource type="Shader" uid="uid://crvvgebme1gbr" path="res://shooting-cone.gdshader" id="1_txci4"]
-[ext_resource type="Script" uid="uid://jpc33yrrmmlf" path="res://ShootingCone.cs" id="2_ltbtd"]
+[ext_resource type="Shader" uid="uid://crvvgebme1gbr" path="res://Scripts/shooting-cone.gdshader" id="1_sw7jc"]
+[ext_resource type="Script" uid="uid://jpc33yrrmmlf" path="res://Scripts/ShootingCone.cs" id="2_xc375"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ab8f4"]
 resource_local_to_scene = true
 resource_name = "ShootingConeShader"
-shader = ExtResource("1_txci4")
+shader = ExtResource("1_sw7jc")
 shader_parameter/cone_angle = 90.0
 shader_parameter/start_angle = 0.0
 shader_parameter/fade_intensity = 3.0
@@ -22,4 +22,4 @@ offset_left = -32.0
 offset_top = -32.0
 offset_right = 32.0
 offset_bottom = 32.0
-script = ExtResource("2_ltbtd")
+script = ExtResource("2_xc375")
