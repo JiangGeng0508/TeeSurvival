@@ -9,3 +9,12 @@ script = ExtResource("1_85xh7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_kmayr")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="CollisionShape2D"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+editor_only = false
+
+[connection signal="body_entered" from="." to="." method="OnSomethingEntered"]

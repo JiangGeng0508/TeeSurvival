@@ -13,7 +13,7 @@ public partial class Tee : CharacterBody2D
 	private Line2D _cursorLine; //光标指示线
 	private Sprite2D _cursorMarker; //光标指示点
 	private Label _stateLabel;    //跟随人物的标签
-	private Vector2 _moveVelocity = new(0, 0);//受控制速度（不包括重力）
+	private Vector2 _exVelocity = new(0, 0);//受控制速度（不包括重力）
 	private Vector2 _gravityAcc = new(0, 0);//重力效果速度
 	private TeeSkin _teeSkin; //皮肤节点
 	private Node2D _hand; //手节点
@@ -23,6 +23,7 @@ public partial class Tee : CharacterBody2D
 	private bool _isJumping = false;//腾空标志，用于控制释放跳跃键时的处理
 	private int _maxDodgeCount = 1;   //最多闪避的次数
 	private int _dodgeCount = 0;
+	private float axis = 0f;
 	public override void _Ready()
 	{
 		_stateLabel = GetNode<Label>("StateLabel");
@@ -49,7 +50,7 @@ public partial class Tee : CharacterBody2D
 			if (_isJumping && Mathf.Abs(Velocity.Y) <= Gravity)
 			{
 				_gravityAcc = new Vector2(0, 0);
-				_moveVelocity.Y = 0;
+				_exVelocity.Y = 0;
 				_isJumping = false;
 				GD.Print("跳跃结束");
 			}
@@ -62,13 +63,15 @@ public partial class Tee : CharacterBody2D
 		if (IsOnWall())
 		{
 			_jumpCount = _maxJumpCount;
-			if (_moveVelocity.X != 0 && Velocity.Y > 20)
+			if (Velocity.Y > 20f)
 			{
 				_gravityAcc -= new Vector2(0, Gravity * 0.9f);
 			} 
 		}
+
+		var move = new Vector2(axis * Speed, 0);
 		//更新速度
-		Velocity = _moveVelocity + _gravityAcc;
+		Velocity = move + _exVelocity + _gravityAcc;
 		if(Velocity.Y > 1000f) Velocity = new Vector2(Velocity.X,1000f);
 		MoveAndSlide();
 		//更新状态标签
@@ -89,58 +92,42 @@ public partial class Tee : CharacterBody2D
 	}
 	public override void _Input(InputEvent @event)
 	{
+		axis = Input.GetAxis("move_left", "move_right");
 		if (@event is InputEventKey eventKey)
 		{
 			if (eventKey.Pressed)
 			{
-				if (eventKey.IsActionPressed("move_left"))
-				{
-					_moveVelocity += new Vector2(-Speed, 0);
-				}
-				if (eventKey.IsActionPressed("move_right"))
-				{
-					_moveVelocity += new Vector2(Speed, 0);
-				}
-
 				if (eventKey.IsActionPressed("jump") && _jumpCount > 0)
 				{
 					//按下“跳跃”键时，改变Y方向速度，重置重力并减少跳跃次数，腾空标志改为true
-					_moveVelocity += new Vector2(0, -JumpSpeed);
+					_exVelocity += new Vector2(0, -JumpSpeed);
 					_gravityAcc = new Vector2(0, 0);
 					_jumpCount--;
 					_isJumping = true;
 				}
-				if (eventKey.IsActionPressed("dodge") && _dodgeCount > 0 && _moveVelocity.X != 0)
+				if (eventKey.IsActionPressed("dodge") && _dodgeCount > 0 && _exVelocity.X != 0)
 				{
 					//按下“闪避”键时，改变X方向速度，并在0.1秒后复原
-					var acc = _moveVelocity.X > 0 ? DodgeSpeed : -DodgeSpeed;
-					_moveVelocity.X += acc;
+					var acc = _exVelocity.X > 0 ? DodgeSpeed : -DodgeSpeed;
+					_exVelocity.X += acc;
 					GetTree().CreateTimer(0.1f, false).Timeout += () =>
 					{
-						_moveVelocity.X -= acc;
+						_exVelocity.X -= acc;
 					};
 					_dodgeCount--;
 				}
 			}
 			else
 			{
-				if (eventKey.IsActionReleased("move_left"))
-				{
-					_moveVelocity += new Vector2(Speed, 0);
-				}
-				if (eventKey.IsActionReleased("move_right"))
-				{
-					_moveVelocity += new Vector2(-Speed, 0);
-				}
 				if (eventKey.IsActionReleased("jump") && _isJumping)
 				{
 					//腾空并松开“跳跃”键时，重置Y方向速度和重力，腾空标志改为false
-					_moveVelocity.Y = 100;
+					_exVelocity.Y = 100;
 					_isJumping = false;
 					_gravityAcc = new Vector2(0, 0);
 				}
 			}
-			SetFoot(!(Mathf.Abs(_moveVelocity.X) > 10));
+			SetFoot(!(Mathf.Abs(_exVelocity.X) > 10));
 		}
 	}
 	public void SetFoot(bool idle)
