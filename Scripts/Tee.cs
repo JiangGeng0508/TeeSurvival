@@ -11,6 +11,15 @@ public partial class Tee : CharacterBody2D
 	[Export] private Texture2D _teeSkinTexture;
 	[Export] private float _longAttackTime = 0.3f;
 	[Export] private DodgeModeEnum _dodgeModeEnum = DodgeModeEnum.Horizontal;
+	// 水平移动强化参数
+	[Export] private float _groundAcceleration = 3000f;
+	[Export] private float _groundDeceleration = 4000f;
+	[Export] private float _airAcceleration = 1500f;
+	[Export] private float _airDeceleration = 2000f;
+	[Export] private float _maxFallSpeed = 1000f;
+	// 跳跃易用性
+	[Export] private float _coyoteTime = 0.12f; // 离地后宽限时间
+	[Export] private float _jumpBufferTime = 0.12f; // 提前按跳跃的缓冲
 	// 抓钩参数
 	[Export] private float _hookMaxDistance = 300f;
 	[Export] private float _hookRestLength = 200f;
@@ -43,6 +52,9 @@ public partial class Tee : CharacterBody2D
 	private Vector2 _homePosition = Vector2.Zero;
 	private Vector2 _hookGlobalPosition = Vector2.Zero;
 	private bool _isHooking = false;
+	private float _coyoteTimer = 0f;
+	private float _jumpBufferTimer = 0f;
+	private Vector2 _lastWallNormal = Vector2.Zero;
 	public override void _Ready()
 	{
 		_stateLabel = GetNode<Label>("StateLabel");
@@ -59,14 +71,14 @@ public partial class Tee : CharacterBody2D
 	}
 	public override void _PhysicsProcess(double delta)
 	{
-		//跳跃状态检测
+		// 跳跃与地面状态检测（含土狼时间）
 		if (IsOnFloor())
 		{
 			//在地面时重置重力效果，并重置跳跃和闪避次数
 			_gravityAcc = new Vector2(0, 0);
 			_jumpCount = _maxJumpCount;
 			if(_dodgeFinished) _dodgeCount = _maxDodgeCount;
-			
+			_coyoteTimer = _coyoteTime;
 		}
 		else
 		{
@@ -80,7 +92,7 @@ public partial class Tee : CharacterBody2D
 
 			//腾空时施加重力加速度
 			_gravityAcc += new Vector2(0, _gravity);
-			
+			_coyoteTimer -= (float)delta;
 		}
 		//贴墙时重置跳跃次数，实现登墙跳
 		if (IsOnWall())
@@ -90,6 +102,7 @@ public partial class Tee : CharacterBody2D
 			{
 				_gravityAcc -= new Vector2(0, _gravity * 0.9f);
 			} 
+			_lastWallNormal = GetWallNormal();
 		}
 
 		var move = new Vector2(_axis * _speed, 0);
@@ -115,11 +128,11 @@ public partial class Tee : CharacterBody2D
 			_gravityAcc = new Vector2(0, _gravity * _hookGravityMultiplier);
 			_hookLine.Points = [Vector2.Zero, _hookGlobalPosition - GlobalPosition];
 		}
-		//更新速度
+		//更新速度并限制最大下落
 		Velocity = move + _exVelocity + _gravityAcc + hookForce;
+		if (Velocity.Y > _maxFallSpeed) Velocity = new Vector2(Velocity.X, _maxFallSpeed);
 		MoveAndSlide();
 		
-		if(Velocity.Y > 1000f) Velocity = new Vector2(Velocity.X,1000f);
 		if (Position.Y > 2000f) Respawn();//掉出地图时回到起始点
 		
 		_stateLabel.Text = $"";//更新状态标签
@@ -133,7 +146,7 @@ public partial class Tee : CharacterBody2D
 		else
 		{
 			_cursorLine.DefaultColor = Colors.Green;
-			_cursorLine.Points = [Vector2.Zero, GetLocalMousePosition().Normalized() * 300f];
+			_cursorLine.Points = [Vector2.Zero, GetLocalMousePosition().Normalized() * _hookMaxDistance];
 		}
 		_cursorMarker.Position = _hookGlobalPosition - GlobalPosition;
 		// _cursorMarker.Position = GetLocalMousePosition();
