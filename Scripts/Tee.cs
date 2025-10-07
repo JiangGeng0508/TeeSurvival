@@ -1,14 +1,21 @@
+using System;
 using Godot;
 
 public partial class Tee : CharacterBody2D
 {
 	//移动属性
-	[Export] public float Speed = 300f;
-	[Export] public float JumpSpeed = 800f;
-	[Export] public float DodgeSpeed = 1000f;
-	[Export] public float Gravity = 40f;
-	[Export] public Texture2D TeeSkinTexture;
-	[Export] public float LongAttackTime = 0.3f;
+	[Export] private float _speed = 300f;
+	[Export] private float _jumpSpeed = 800f;
+	[Export] private float _dodgeSpeed = 1000f;
+	[Export] private float _gravity = 40f;
+	[Export] private Texture2D _teeSkinTexture;
+	[Export] private float _longAttackTime = 0.3f;
+	[Export] private DodgeModeEnum _dodgeModeEnum = DodgeModeEnum.Horizontal;
+	private enum DodgeModeEnum
+	{
+		Horizontal,
+		Free
+	}
 	
 	private Line2D _cursorLine; //光标指示线
 	private Line2D _hookLine;
@@ -36,7 +43,7 @@ public partial class Tee : CharacterBody2D
 		_cursorLine = GetNode<Line2D>("CursorLine");
 		_cursorMarker = GetNode<Sprite2D>("CursorMarker");
 		_teeSkin = GetNode<TeeSkin>("TeeSkin");
-		if (TeeSkinTexture != null) _teeSkin.SkinTexture = TeeSkinTexture;
+		if (_teeSkinTexture != null) _teeSkin.SkinTexture = _teeSkinTexture;
 		_hand = GetNode<Node2D>("Hand");
 		_weapon = GetNode<Weapon>("Hand/Weapon");
 		_hookRay = GetNode<RayCast2D>("HookRay");
@@ -58,7 +65,7 @@ public partial class Tee : CharacterBody2D
 		else
 		{
 			//腾空达到最高点时修复抛物线曲线
-			if (_isJumping && Mathf.Abs(Velocity.Y) <= Gravity)
+			if (_isJumping && Mathf.Abs(Velocity.Y) <= _gravity)
 			{
 				_gravityAcc = new Vector2(0, 0);
 				_exVelocity.Y = 0;
@@ -66,7 +73,7 @@ public partial class Tee : CharacterBody2D
 			}
 
 			//腾空时施加重力加速度
-			_gravityAcc += new Vector2(0, Gravity);
+			_gravityAcc += new Vector2(0, _gravity);
 			
 		}
 		//贴墙时重置跳跃次数，实现登墙跳
@@ -75,18 +82,17 @@ public partial class Tee : CharacterBody2D
 			_jumpCount = _maxJumpCount;
 			if (Velocity.Y > 20f)
 			{
-				_gravityAcc -= new Vector2(0, Gravity * 0.9f);
+				_gravityAcc -= new Vector2(0, _gravity * 0.9f);
 			} 
 		}
 
-		var move = new Vector2(_axis * Speed, 0);
-		//TODO:处理钩子以及勾子拉力
+		var move = new Vector2(_axis * _speed, 0);
 		var hookForce = Vector2.Zero;
 		_hookRay.TargetPosition = GetLocalMousePosition().Normalized() * 300f;
 		
 		if (_isHooking)
 		{
-			_gravityAcc = new Vector2(0, Gravity * 5f);
+			_gravityAcc = new Vector2(0, _gravity * 5f);
 			hookForce = (_hookGlobalPosition - GlobalPosition) * 5f;
 			_hookLine.Points = [Vector2.Zero, _hookGlobalPosition - GlobalPosition];
 		}
@@ -121,16 +127,37 @@ public partial class Tee : CharacterBody2D
 		_axis = Input.GetAxis("move_left", "move_right");
 		if (@event is InputEventKey eventKey)
 		{
-			if (eventKey.IsActionPressed("dodge") && _dodgeCount > 0 && Velocity.X != 0)
+			if (eventKey.IsActionPressed("dodge"))
 			{
-				//按下“闪避”键时，改变X方向速度，并在0.1秒后复原
-				var acc = Velocity.X > 0 ? DodgeSpeed : -DodgeSpeed;
-				_exVelocity.X += acc;
-				GetTree().CreateTimer(0.1f, false).Timeout += () =>
+				if(_dodgeCount < 0) return;
+				switch (_dodgeModeEnum)
 				{
-					_exVelocity.X -= acc;
-					_dodgeFinished = true;
-				};
+					case DodgeModeEnum.Horizontal:
+					{
+						//按下“闪避”键时，改变X方向速度，并在0.1秒后复原
+						var acc = Velocity.X > 0 ? _dodgeSpeed : -_dodgeSpeed;
+						_exVelocity.X += acc;
+						_dodgeFinished = false;
+						GetTree().CreateTimer(0.1f, false).Timeout += () =>
+						{
+							_exVelocity.X -= acc;
+							_dodgeFinished = true;
+						};
+						break;
+					}
+					case DodgeModeEnum.Free:
+						var dodgeVelocity = GetLocalMousePosition().Normalized() * _dodgeSpeed;
+						_exVelocity += dodgeVelocity;
+						_dodgeFinished = false;
+						GetTree().CreateTimer(0.1f, false).Timeout += () =>
+						{
+							_exVelocity -= dodgeVelocity;
+							_dodgeFinished = true;
+						};
+						break;
+					default:
+						break;
+				}
 				_dodgeCount--;
 			}
 
@@ -139,7 +166,7 @@ public partial class Tee : CharacterBody2D
 			if (eventKey.IsActionPressed("jump") && _jumpCount > 0)
 			{
 				//按下“跳跃”键时，改变Y方向速度，重置重力并减少跳跃次数，腾空标志改为true
-				_exVelocity += new Vector2(0, -JumpSpeed);
+				_exVelocity += new Vector2(0, -_jumpSpeed);
 				_gravityAcc = new Vector2(0, 0);
 				_jumpCount--;
 				_isJumping = true;

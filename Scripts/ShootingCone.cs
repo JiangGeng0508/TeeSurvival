@@ -44,7 +44,7 @@ public partial class ShootingCone : ColorRect
 
     public void OnPressTime(float percentage)
     {
-        _material.SetShaderParameter("fade_intensity", FadeIntensity * (1 + percentage));
+        _material.SetShaderParameter("fade_intensity", FadeIntensity * percentage);
         Scale = new Vector2(1f + percentage,1f + percentage);
         Position = - Size * Scale / 2;
     }

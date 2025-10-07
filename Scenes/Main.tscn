@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://bhlafme7wjqod"]
+[gd_scene load_steps=9 format=4 uid="uid://bhlafme7wjqod"]
 
 [ext_resource type="TileSet" uid="uid://bwr1y7spvb03w" path="res://Assets/MapTile.tres" id="1_glv2v"]
 [ext_resource type="PackedScene" uid="uid://3cp3sg142x6n" path="res://Scenes/Tee.tscn" id="2_uu6xs"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bwpd8hb17ieer" path="res://Scenes/Enemy.tscn" id="4_cm0pq"]
 [ext_resource type="PackedScene" uid="uid://e5q6p8kh7qjx" path="res://Scenes/PortalArea.tscn" id="5_v1gob"]
 [ext_resource type="PackedScene" uid="uid://yt4s0xcli5gd" path="res://Scenes/TestNewScene.tscn" id="6_jw32o"]
+[ext_resource type="PackedScene" uid="uid://bvky8rpx53f6" path="res://Scenes/MovingPlatform.tscn" id="8_50glp"]
 
 [node name="Main" type="Node2D"]
 
@@ -42,8 +43,15 @@ MotionType = "wander"
 Speed = 30.0
 
 [node name="PortalArea" parent="." instance=ExtResource("5_v1gob")]
-position = Vector2(307, 423)
+position = Vector2(312, 429)
 TargetScene = ExtResource("6_jw32o")
+
+[node name="Label" type="Label" parent="PortalArea"]
+offset_left = -24.0
+offset_top = -38.0
+offset_right = 24.0
+offset_bottom = -15.0
+text = "传送门"
 
 [node name="VisualArea" parent="." instance=ExtResource("3_jw32o")]
 position = Vector2(23, 253)
@@ -52,7 +60,7 @@ LabelText = "贴住墙"
 
 [node name="VisualArea_2" parent="." instance=ExtResource("3_jw32o")]
 position = Vector2(1473, 417)
-LabelText = "极限跳距离"
+LabelText = "极限跳+冲刺距离"
 
 [node name="VisualArea_3" parent="." instance=ExtResource("3_jw32o")]
 position = Vector2(57, 414)
@@ -189,3 +197,7 @@ _visualAreaModeEnum = 2
 [node name="VisualArea_30" parent="Node2D" instance=ExtResource("3_jw32o")]
 position = Vector2(1975, 487)
 _visualAreaModeEnum = 2
+
+[node name="MovingPlatform" parent="." instance=ExtResource("8_50glp")]
+position = Vector2(1188, 731)
+_points = PackedVector2Array(200, 0, -200, 0)
