@@ -81,11 +81,12 @@ public partial class Tee : CharacterBody2D
 
 		var move = new Vector2(_axis * Speed, 0);
 		//TODO:处理钩子以及勾子拉力
-		//射线检测
 		var hookForce = Vector2.Zero;
 		_hookRay.TargetPosition = GetLocalMousePosition().Normalized() * 300f;
+		
 		if (_isHooking)
 		{
+			_gravityAcc = new Vector2(0, Gravity * 5f);
 			hookForce = (_hookGlobalPosition - GlobalPosition) * 5f;
 			_hookLine.Points = [Vector2.Zero, _hookGlobalPosition - GlobalPosition];
 		}
@@ -100,7 +101,16 @@ public partial class Tee : CharacterBody2D
 		
 		_teeSkin.EyesSprite.Position = GetLocalMousePosition().Normalized() * 3f;//控制眼睛偏移
 		//更新光标
-		_cursorLine.Points = [Vector2.Zero, GetLocalMousePosition().Normalized() * 300f];
+		if (_hookRay.IsColliding())
+		{
+			_cursorLine.DefaultColor = Colors.Red;
+			_cursorLine.Points = [Vector2.Zero, _hookRay.GetCollisionPoint() - Position];
+		}
+		else
+		{
+			_cursorLine.DefaultColor = Colors.Green;
+			_cursorLine.Points = [Vector2.Zero, GetLocalMousePosition().Normalized() * 300f];
+		}
 		_cursorMarker.Position = _hookGlobalPosition - GlobalPosition;
 		// _cursorMarker.Position = GetLocalMousePosition();
 		//更新手节点位置和角度
@@ -146,7 +156,7 @@ public partial class Tee : CharacterBody2D
 		}
 		if (@event.IsActionPressed("hook"))
 		{
-			if (!_hookRay.CollideWithBodies)
+			if (!_hookRay.IsColliding())
 			{
 				_isHooking = false;
 				_hookLine.Hide();
