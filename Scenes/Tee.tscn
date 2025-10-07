@@ -13,7 +13,6 @@ size = Vector2(31.9, 31.9)
 script = ExtResource("1_j8wys")
 
 [node name="TeeSurviver" type="Sprite2D" parent="."]
-position = Vector2(0, -1)
 texture = ExtResource("6_dtt2j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

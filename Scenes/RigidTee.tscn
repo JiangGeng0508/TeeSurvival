@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://qgicwnpgakcs"]
+
+[ext_resource type="Script" uid="uid://bpwne3kmdln3q" path="res://Scripts/RigidTee.cs" id="1_6aax0"]
+[ext_resource type="PackedScene" uid="uid://c5i802i0ffn3t" path="res://Scenes/TeeSkin.tscn" id="2_oycbj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oycbj"]
+size = Vector2(31, 31)
+
+[node name="RigidTee" type="RigidBody2D"]
+script = ExtResource("1_6aax0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_oycbj")
+
+[node name="TeeSkin" parent="." instance=ExtResource("2_oycbj")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
+[connection signal="body_shape_entered" from="." to="." method="OnBodyShapeEntered"]

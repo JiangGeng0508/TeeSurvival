@@ -36,7 +36,7 @@ public partial class Tee : CharacterBody2D
 		_cursorLine = GetNode<Line2D>("CursorLine");
 		_cursorMarker = GetNode<Sprite2D>("CursorMarker");
 		_teeSkin = GetNode<TeeSkin>("TeeSkin");
-		if (TeeSkinTexture != null) _teeSkin.skinTexture = TeeSkinTexture;
+		if (TeeSkinTexture != null) _teeSkin.SkinTexture = TeeSkinTexture;
 		_hand = GetNode<Node2D>("Hand");
 		_weapon = GetNode<Weapon>("Hand/Weapon");
 		_hookRay = GetNode<RayCast2D>("HookRay");
@@ -99,7 +99,6 @@ public partial class Tee : CharacterBody2D
 		
 		_stateLabel.Text = $"";//更新状态标签
 		
-		_teeSkin.EyesSprite.Position = GetLocalMousePosition().Normalized() * 3f;//控制眼睛偏移
 		//更新光标
 		if (_hookRay.IsColliding())
 		{
@@ -172,26 +171,10 @@ public partial class Tee : CharacterBody2D
 			_isHooking = false;
 			_hookLine.Hide();
 		}
-		SetFoot(!(Mathf.Abs(Velocity.X) > 10));
 	}
 	private void Respawn(bool reload = false)
 	{
 		Position = _homePosition;
 		if (reload) GetTree().ReloadCurrentScene();
-	}
-	private void SetFoot(bool idle)
-	{
-		if (idle)
-		{
-			_teeSkin.FootLSprite.Stop();
-			_teeSkin.FootRSprite.Stop();
-			_teeSkin.FootLSprite.Frame = 0;
-			_teeSkin.FootRSprite.Frame = 0;
-		}
-		else
-		{
-			_teeSkin.FootLSprite.Play();
-			_teeSkin.FootRSprite.Play();
-		}
 	}
 }
