@@ -10,6 +10,7 @@
 size = Vector2(31.9, 31.9)
 
 [node name="Tee" type="CharacterBody2D"]
+z_index = 100
 script = ExtResource("1_j8wys")
 
 [node name="TeeSurviver" type="Sprite2D" parent="."]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=4 uid="uid://yt4s0xcli5gd"]
+[gd_scene load_steps=4 format=4 uid="uid://yt4s0xcli5gd"]
 
 [ext_resource type="PackedScene" uid="uid://3cp3sg142x6n" path="res://Scenes/Tee.tscn" id="1_rg0t8"]
 [ext_resource type="TileSet" uid="uid://bwr1y7spvb03w" path="res://Assets/MapTile.tres" id="2_qsuqk"]
+[ext_resource type="PackedScene" uid="uid://3gq5axgge35l" path="res://Scenes/VisualArea.tscn" id="3_yp8de"]
 
 [node name="TestNewScene" type="Node2D"]
 
@@ -11,3 +12,710 @@ position = Vector2(514, 288)
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAAAABsAAQAAAAAAAAAAABwAAQAAAAAAAAABABsAAQAAAAAAAAABABwAAQAAAAAAAAACABsAAQAAAAAAAAACABwAAQAAAAAAAAADABsAAQAAAAAAAAADABwAAQAAAAAAAAAEABsAAQAAAAAAAAAEABwAAQAAAAAAAAAFABsAAQAAAAAAAAAFABwAAQAAAAAAAAAGABsAAQAAAAAAAAAGABwAAQAAAAAAAAAHABsAAQAAAAAAAAAHABwAAQAAAAAAAAAIABsAAQAAAAAAAAAIABwAAQAAAAAAAAAJABsAAQAAAAAAAAAJABwAAQAAAAAAAAAKABsAAQAAAAAAAAAKABwAAQAAAAAAAAALABsAAQAAAAAAAAALABwAAQAAAAAAAAAMABsAAQAAAAAAAAAMABwAAQAAAAAAAAANABsAAQAAAAAAAAANABwAAQAAAAAAAAAOABsAAQAAAAAAAAAOABwAAQAAAAAAAAAPABsAAQAAAAAAAAAPABwAAQAAAAAAAAAQABsAAQAAAAAAAAAQABwAAQAAAAAAAAARABsAAQAAAAAAAAARABwAAQAAAAAAAAASABsAAQAAAAAAAAASABwAAQAAAAAAAAATABsAAQAAAAAAAAATABwAAQAAAAAAAAAUABsAAQAAAAAAAAAUABwAAQAAAAAAAAAVABsAAQAAAAAAAAAVABwAAQAAAAAAAAAWABsAAQAAAAAAAAAWABwAAQAAAAAAAAAXABsAAQAAAAAAAAAXABwAAQAAAAAAAAAYABsAAQAAAAAAAAAYABwAAQAAAAAAAAAZABsAAQAAAAAAAAAZABwAAQAAAAAAAAAaABsAAQAAAAAAAAAaABwAAQAAAAAAAAAbABsAAQAAAAAAAAAbABwAAQAAAAAAAAAcABsAAQAAAAAAAAAcABwAAQAAAAAAAAAdABsAAQAAAAAAAAAdABwAAQAAAAAAAAAeABsAAQAAAAAAAAAeABwAAQAAAAAAAAAfABsAAQAAAAAAAAAfABwAAQAAAAAAAAAgABsAAQAAAAAAAAAgABwAAQAAAAAAAAAhABsAAQAAAAAAAAAhABwAAQAAAAAAAAAiABsAAQAAAAAAAAAiABwAAQAAAAAAAAAjABsAAQAAAAAAAAAjABwAAQAAAAAAAAAkABsAAQAAAAAAAAAkABwAAQAAAAAAAAAlABsAAQAAAAAAAAAlABwAAQAAAAAAAAAmABsAAQAAAAAAAAAmABwAAQAAAAAAAAAnABsAAQAAAAAAAAAnABwAAQAAAAAAAAAoABsAAQAAAAAAAAAoABwAAQAAAAAAAAApABsAAQAAAAAAAAApABwAAQAAAAAAAAAqABsAAQAAAAAAAAAqABwAAQAAAAAAAAArABsAAQAAAAAAAAArABwAAQAAAAAAAAAsABsAAQAAAAAAAAAsABwAAQAAAAAAAAAtABsAAQAAAAAAAAAtABwAAQAAAAAAAAAuABsAAQAAAAAAAAAuABwAAQAAAAAAAAAvABsAAQAAAAAAAAAvABwAAQAAAAAAAAAwABsAAQAAAAAAAAAwABwAAQAAAAAAAAAxABsAAQAAAAAAAAAxABwAAQAAAAAAAAAyABsAAQAAAAAAAAAyABwAAQAAAAAAAAAzABsAAQAAAAAAAAAzABwAAQAAAAAAAAA0ABsAAQAAAAAAAAA0ABwAAQAAAAAAAAA1ABsAAQAAAAAAAAA1ABwAAQAAAAAAAAA2ABsAAQAAAAAAAAA2ABwAAQAAAAAAAAA3ABsAAQAAAAAAAAA3ABwAAQAAAAAAAAA4ABsAAQAAAAAAAAA4ABwAAQAAAAAAAAA5ABsAAQAAAAAAAAA5ABwAAQAAAAAAAAA6ABsAAQAAAAAAAAA6ABwAAQAAAAAAAAA7ABsAAQAAAAAAAAA7ABwAAQAAAAAAAAA8ABsAAQAAAAAAAAA8ABwAAQAAAAAAAAA9ABsAAQAAAAAAAAA9ABwAAQAAAAAAAAA+ABsAAQAAAAAAAAA+ABwAAQAAAAAAAAA/ABsAAQAAAAAAAAA/ABwAAQAAAAAAAABAABsAAQAAAAAAAABAABwAAQAAAAAAAABBABsAAQAAAAAAAABBABwAAQAAAAAAAABCABsAAQAAAAAAAABCABwAAQAAAAAAAABDABsAAQAAAAAAAABDABwAAQAAAAAAAABEABsAAQAAAAAAAABEABwAAQAAAAAAAABFABsAAQAAAAAAAABFABwAAQAAAAAAAABGABsAAQAAAAAAAABGABwAAQAAAAAAAABHABsAAQAAAAAAAABHABwAAQAAAAAAAABIABsAAQAAAAAAAABIABwAAQAAAAAAAABJABsAAQAAAAAAAABJABwAAQAAAAAAAABKABsAAQAAAAAAAABKABwAAQAAAAAAAABLABsAAQAAAAAAAABLABwAAQAAAAAAAABMABsAAQAAAAAAAABMABwAAQAAAAAAAABNABsAAQAAAAAAAABNABwAAQAAAAAAAABOABsAAQAAAAAAAABOABwAAQAAAAAAAABPABsAAQAAAAAAAABPABwAAQAAAAAAAAA=")
 tile_set = ExtResource("2_qsuqk")
+
+[node name="Node2D_2" type="Node2D" parent="."]
+position = Vector2(-703, -63)
+
+[node name="VisualArea" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1511, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_2" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1527, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_3" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1543, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_4" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1559, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_5" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1575, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_6" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1591, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_7" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1607, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_8" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1623, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_9" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1639, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_10" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1655, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_11" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1671, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_12" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1687, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_13" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1703, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_14" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1719, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_15" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1735, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_16" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1751, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_17" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1767, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_18" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1783, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_19" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1799, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_20" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1815, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_21" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1831, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_22" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1847, 487)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_31" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1511, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_32" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1527, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_33" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1543, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_34" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1559, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_35" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1575, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_36" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1591, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_37" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1607, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_38" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1623, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_39" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1639, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_40" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1655, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_41" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1671, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_42" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1687, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_43" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1703, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_44" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1719, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_45" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1735, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_46" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1751, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_47" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1767, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_48" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1783, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_49" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1799, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_50" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1815, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_51" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1831, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_52" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1847, 471)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_61" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1511, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_62" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1527, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_63" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1543, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_64" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1559, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_65" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1575, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_66" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1591, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_67" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1607, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_68" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1623, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_69" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1639, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_70" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1655, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_71" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1671, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_72" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1687, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_73" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1703, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_74" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1719, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_75" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1735, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_76" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1751, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_77" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1767, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_78" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1783, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_79" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1799, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_80" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1815, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_81" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1831, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_82" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1847, 455)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_91" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1511, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_92" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1527, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_93" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1543, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_94" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1559, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_95" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1575, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_96" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1591, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_97" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1607, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_98" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1623, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_99" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1639, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_100" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1655, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_101" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1671, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_102" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1687, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_103" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1703, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_104" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1719, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_105" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1735, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_106" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1751, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_107" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1767, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_108" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1783, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_109" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1799, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_110" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1815, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_111" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1831, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_112" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1847, 439)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_121" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1511, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_122" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1527, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_123" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1543, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_124" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1559, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_125" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1575, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_126" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1591, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_127" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1607, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_128" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1623, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_129" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1639, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_130" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1655, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_131" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1671, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_132" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1687, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_133" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1703, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_134" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1719, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_135" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1735, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_136" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1751, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_137" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1767, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_138" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1783, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_139" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1799, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_140" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1815, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_141" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1831, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_142" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1847, 423)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_151" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1511, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_152" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1527, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_153" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1543, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_154" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1559, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_155" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1575, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_156" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1591, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_157" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1607, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_158" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1623, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_159" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1639, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_160" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1655, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_161" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1671, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_162" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1687, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_163" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1703, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_164" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1719, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_165" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1735, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_166" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1751, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_167" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1767, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_168" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1783, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_169" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1799, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_170" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1815, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_171" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1831, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_172" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1847, 407)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_181" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1511, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_182" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1527, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_183" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1543, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_184" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1559, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_185" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1575, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_186" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1591, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_187" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1607, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_188" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1623, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_189" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1639, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_190" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1655, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_191" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1671, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_192" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1687, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_193" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1703, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_194" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1719, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_195" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1735, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_196" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1751, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_197" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1767, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_198" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1783, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_199" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1799, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_200" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1815, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_201" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1831, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_202" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1847, 391)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_211" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1511, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_212" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1527, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_213" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1543, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_214" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1559, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_215" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1575, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_216" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1591, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_217" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1607, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_218" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1623, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_219" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1639, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_220" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1655, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_221" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1671, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_222" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1687, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_223" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1703, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_224" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1719, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_225" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1735, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_226" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1751, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_227" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1767, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_228" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1783, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_229" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1799, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_230" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1815, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_231" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1831, 375)
+_visualAreaModeEnum = 1
+
+[node name="VisualArea_232" parent="Node2D_2" instance=ExtResource("3_yp8de")]
+position = Vector2(1847, 375)
+_visualAreaModeEnum = 1

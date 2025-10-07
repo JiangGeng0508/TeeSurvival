@@ -25,6 +25,7 @@ public partial class VisualArea : Area2D
 
     private ColorRect _colorRect;
     private RichTextLabel _richTextLabel;
+    private Timer _timer;
     public override void _ValidateProperty(Dictionary property)
     {
         _Ready();
@@ -39,6 +40,15 @@ public partial class VisualArea : Area2D
         _colorRect.Visible = ColorVisible;
         _richTextLabel.Text = LabelText;
         _richTextLabel.Hide();
+        if (_visualAreaModeEnum != VisualAreaModeEnum.KeepTime) return;
+        _timer = new Timer
+        {
+            WaitTime = KeepTime,
+            OneShot = true,
+            Autostart = false
+        };
+        AddChild(_timer);
+        _timer.Timeout += TurnOff;
     }
     private void OnBodyEntered(Node2D node)
     {
@@ -52,19 +62,20 @@ public partial class VisualArea : Area2D
         switch (_visualAreaModeEnum)
         {
             case VisualAreaModeEnum.OnlyContact:
-                _colorRect.Color = NormalColor; 
-                _richTextLabel.Hide();
+                TurnOff();
                 break;
             case VisualAreaModeEnum.KeepTime:
-                GetTree().CreateTimer(KeepTime, false).Timeout += () =>
-                {
-                    _colorRect.Color = NormalColor; 
-                    _richTextLabel.Hide();
-                };
+                _timer.Start();
                 break;
             case VisualAreaModeEnum.Trigger:
             default:
                 break;
         }
+    }
+
+    private void TurnOff()
+    {
+        _colorRect.Color = NormalColor; 
+        _richTextLabel.Hide();
     }
 }
