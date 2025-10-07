@@ -12,6 +12,9 @@ size = Vector2(31.9, 31.9)
 [node name="Tee" type="CharacterBody2D"]
 z_index = 100
 script = ExtResource("1_j8wys")
+_hookRestLength = 20.0
+_hookStiffness = 5.0
+_hookDamping = 0.0
 
 [node name="TeeSurviver" type="Sprite2D" parent="."]
 texture = ExtResource("6_dtt2j")

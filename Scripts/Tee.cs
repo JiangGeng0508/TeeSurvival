@@ -11,6 +11,12 @@ public partial class Tee : CharacterBody2D
 	[Export] private Texture2D _teeSkinTexture;
 	[Export] private float _longAttackTime = 0.3f;
 	[Export] private DodgeModeEnum _dodgeModeEnum = DodgeModeEnum.Horizontal;
+	// 抓钩参数
+	[Export] private float _hookMaxDistance = 300f;
+	[Export] private float _hookRestLength = 200f;
+	[Export] private float _hookStiffness = 1f; // 弹簧系数（越大拉力越强）
+	[Export] private float _hookDamping = 1f;   // 阻尼（抑制抖动）
+	[Export] private float _hookGravityMultiplier = 5f; // 抓钩时的重力倍率
 	private enum DodgeModeEnum
 	{
 		Horizontal,
@@ -88,12 +94,25 @@ public partial class Tee : CharacterBody2D
 
 		var move = new Vector2(_axis * _speed, 0);
 		var hookForce = Vector2.Zero;
-		_hookRay.TargetPosition = GetLocalMousePosition().Normalized() * 300f;
+		// 更新抓钩射线长度
+		_hookRay.TargetPosition = GetLocalMousePosition().Normalized() * _hookMaxDistance;
 		
 		if (_isHooking)
 		{
-			_gravityAcc = new Vector2(0, _gravity * 5f);
-			hookForce = (_hookGlobalPosition - GlobalPosition) * 5f;
+			// 抓钩力：弹簧 + 阻尼（沿绳方向）
+			var toHook = _hookGlobalPosition - GlobalPosition;
+			var distance = toHook.Length();
+			if (distance > 0.001f)
+			{
+				var dir = toHook.Normalized();
+				var stretch = Mathf.Max(0f, distance - _hookRestLength);
+				var springForce = dir * (stretch * _hookStiffness);
+				var velAlong = Velocity.Dot(dir);
+				var dampingForce = -dir * (velAlong * _hookDamping);
+				hookForce = springForce + dampingForce;
+			}
+			// 抓钩时适当增加重力，避免过度漂浮
+			_gravityAcc = new Vector2(0, _gravity * _hookGravityMultiplier);
 			_hookLine.Points = [Vector2.Zero, _hookGlobalPosition - GlobalPosition];
 		}
 		//更新速度
@@ -185,6 +204,7 @@ public partial class Tee : CharacterBody2D
 		}
 		if (@event.IsActionPressed("hook"))
 		{
+			// 发射抓钩：若命中则锁定点并进入抓钩；否则退出
 			if (!_hookRay.IsColliding())
 			{
 				_isHooking = false;
@@ -198,6 +218,7 @@ public partial class Tee : CharacterBody2D
 		}
 		else if (@event.IsActionReleased("hook"))
 		{
+			// 取消抓钩
 			_isHooking = false;
 			_hookLine.Hide();
 		}
