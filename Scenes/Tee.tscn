@@ -28,12 +28,10 @@ offset_bottom = 16.0
 [node name="TeeSkin" parent="." instance=ExtResource("1_70jw6")]
 
 [node name="CursorMarker" type="Sprite2D" parent="."]
-visible = false
 scale = Vector2(2, 2)
 texture = ExtResource("3_3a3r4")
 
 [node name="CursorLine" type="Line2D" parent="."]
-visible = false
 z_index = -1
 points = PackedVector2Array(0, 0, 141, 0)
 width = 1.0
@@ -55,6 +53,7 @@ limit_smoothed = true
 position_smoothing_enabled = true
 
 [node name="HookLine" type="Line2D" parent="."]
+visible = false
 points = PackedVector2Array(0, 75, 0, 0)
 width = 2.0
 
