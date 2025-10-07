@@ -10,25 +10,28 @@ public partial class Weapon : Node2D
 	private Node2D[] _touchedBody;
 	private Polygon2D _attackArea;
 	private CollisionPolygon2D _weaponCollision;
+	private ColorRect _shootingCone;
 	private Tween _tween;
 	private float _pressTime = 0; //按下按键的时间
 	private bool _isPressing = false; //是否正在按下按键
-	private float _longAttackTime = 0.5f;
+	[Export] private float _shortAttackTime = 0.3f;
+	[Export] private float _longAttackTime = 1.0f;
 	public override void _Ready()
 	{
 		_attackArea = GetNode<Polygon2D>("AttackArea");
 		_weaponCollision = GetNode<CollisionPolygon2D>("Area2D/CollisionPolygon2D");
+		_shootingCone = GetNode<ColorRect>("ShootingCone");
 		// GetNode<CollisionPolygon2D>("Area2D/CollisionPolygon2D").Polygon = _attackArea.Polygon;
-		
+
 	}
-	public void OnBodyEntered(Node2D body)//<-
+	private void OnBodyEntered(Node2D body)//<-
 	{
 		if (body.HasMethod("OnHit"))
 		{
 			body.AddToGroup($"TouchedBodyBy{Name}");
 		}
 	}
-	public void OnBodyExited(Node2D body)//<-
+	private void OnBodyExited(Node2D body)//<-
 	{
 		if (body.IsInGroup($"TouchedBodyBy{Name}"))
 		{
@@ -59,18 +62,20 @@ public partial class Weapon : Node2D
 			{
 				//松开攻击时将按键标识置为false
 				_isPressing = false;
-				if (_pressTime < _longAttackTime)//长按时间超过LongAttckTime
+				if (_pressTime >= _shortAttackTime && _pressTime < _longAttackTime)
 				{
 					//短攻击
 					Attack(GD.Randf() * 20 + 20);
 				}
-				else
+				else if(_pressTime >= _longAttackTime)
 				{
 					//长攻击
 					Attack(GD.Randf() * 100 + 100);
 				}
 				_pressTime = 0;//修复长按表现
 			}
+
+			_shootingCone.Visible = _isPressing;
 		}
 	}
 	public override void _PhysicsProcess(double delta)
@@ -80,8 +85,8 @@ public partial class Weapon : Node2D
 		{
 			_pressTime += (float)delta;
 		}
-
-		var percentage = Mathf.Clamp(_pressTime / _longAttackTime,0f,1f);
+		
+		var percentage = Mathf.Clamp((_pressTime - _shortAttackTime) / _longAttackTime,0f,1f);
 		EmitSignalPressTime(percentage);
 		_weaponCollision.Scale = new Vector2(1f + percentage, 1f + percentage);
 	}

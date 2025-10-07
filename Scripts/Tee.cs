@@ -151,7 +151,10 @@ public partial class Tee : CharacterBody2D
 				_isJumping = false;
 				_gravityAcc = new Vector2(0, 0);
 			}
-			
+			if(eventKey.IsActionPressed("indicate_line")) 
+				_cursorLine.Show();
+			else if(eventKey.IsActionReleased("indicate_line"))
+				_cursorLine.Hide();
 		}
 		if (@event.IsActionPressed("hook"))
 		{

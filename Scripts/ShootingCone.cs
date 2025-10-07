@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using Godot.Collections;
+
 [Tool]
 public partial class ShootingCone : ColorRect
 {
@@ -13,6 +15,11 @@ public partial class ShootingCone : ColorRect
     [Export(PropertyHint.Range,"0f,0.1f")] public float OutlineThickness = 0.015f;
     [Export] public Vector4 CustomColor = new(1.0f, 1.0f, 1.0f, 1.0f);
     [Export] public float ConeScale = 1.0f;
+
+    public override void _ValidateProperty(Dictionary property)
+    {
+        _Ready();
+    }
 
     public override void _Ready()
     {
@@ -37,7 +44,7 @@ public partial class ShootingCone : ColorRect
 
     public void OnPressTime(float percentage)
     {
-        _material.SetShaderParameter("fade_intensity", FadeIntensity * percentage);
+        _material.SetShaderParameter("fade_intensity", FadeIntensity * (1 + percentage));
         Scale = new Vector2(1f + percentage,1f + percentage);
         Position = - Size * Scale / 2;
     }
