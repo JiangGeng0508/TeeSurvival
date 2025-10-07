@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using Godot.Collections;
+
 [Tool]
 public partial class VisualArea : Area2D
 {
@@ -18,19 +20,25 @@ public partial class VisualArea : Area2D
     {
         OnlyContact,
         KeepTime,
-        KeepForever
+        Trigger
     }
 
     private ColorRect _colorRect;
     private RichTextLabel _richTextLabel;
+    public override void _ValidateProperty(Dictionary property)
+    {
+        _Ready();
+        _richTextLabel.Show();
+    }
+
     public override void _Ready()
     {
         _colorRect = GetNode<ColorRect>("ColorRect");
         _richTextLabel = GetNode<RichTextLabel>("RichTextLabel");
-        
         _colorRect.Color = NormalColor;
         _colorRect.Visible = ColorVisible;
         _richTextLabel.Text = LabelText;
+        _richTextLabel.Hide();
     }
     private void OnBodyEntered(Node2D node)
     {
@@ -54,7 +62,7 @@ public partial class VisualArea : Area2D
                     _richTextLabel.Hide();
                 };
                 break;
-            case VisualAreaModeEnum.KeepForever:
+            case VisualAreaModeEnum.Trigger:
             default:
                 break;
         }

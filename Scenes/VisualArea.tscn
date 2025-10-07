@@ -17,7 +17,6 @@ offset_bottom = 10.0
 shape = SubResource("RectangleShape2D_k1e4o")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-visible = false
 offset_left = -61.0
 offset_top = -67.0
 offset_right = 62.0

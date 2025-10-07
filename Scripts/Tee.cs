@@ -11,6 +11,8 @@ public partial class Tee : CharacterBody2D
 	[Export] public float LongAttackTime = 0.3f;
 	
 	private Line2D _cursorLine; //光标指示线
+	private Line2D _hookLine;
+	private RayCast2D _hookRay;
 	private Sprite2D _cursorMarker; //光标指示点
 	private Label _stateLabel;    //跟随人物的标签
 	private Vector2 _exVelocity = new(0, 0);//受控制速度（不包括重力）
@@ -35,6 +37,8 @@ public partial class Tee : CharacterBody2D
 		if (TeeSkinTexture != null) _teeSkin.skinTexture = TeeSkinTexture;
 		_hand = GetNode<Node2D>("Hand");
 		_weapon = GetNode<Weapon>("Hand/Weapon");
+		_hookRay = GetNode<RayCast2D>("HookRay");
+		_hookLine = GetNode<Line2D>("HookLine");
 
 		_homePosition = Position;
 	}
@@ -74,18 +78,20 @@ public partial class Tee : CharacterBody2D
 		}
 
 		var move = new Vector2(_axis * Speed, 0);
+		//TODO:处理钩子以及勾子拉力
+		var hookForce = new Vector2();
 		//更新速度
 		Velocity = move + _exVelocity + _gravityAcc;
 		MoveAndSlide();
 		
 		if(Velocity.Y > 1000f) Velocity = new Vector2(Velocity.X,1000f);
-		if (Position.Y > 2000f) Position = _homePosition;//掉出地图时回到起始点
+		if (Position.Y > 2000f) Respawn();//掉出地图时回到起始点
 		
 		_stateLabel.Text = $"";//更新状态标签
 		
 		_teeSkin.EyesSprite.Position = GetLocalMousePosition().Normalized() * 3f;//控制眼睛偏移
 		//更新光标
-		_cursorLine.Points = [Vector2.Zero, GetLocalMousePosition()];
+		_cursorLine.Points = [Vector2.Zero, GetLocalMousePosition().Normalized() * 300f];
 		_cursorMarker.Position = GetLocalMousePosition();
 		//更新手节点位置和角度
 		_hand.Position = GetLocalMousePosition().Normalized() * 20f;
@@ -118,6 +124,7 @@ public partial class Tee : CharacterBody2D
 					};
 					_dodgeCount--;
 				}
+				if (eventKey.IsActionPressed("respawn")) Respawn(eventKey.IsCtrlPressed());
 			}
 			else
 			{
@@ -128,9 +135,31 @@ public partial class Tee : CharacterBody2D
 					_isJumping = false;
 					_gravityAcc = new Vector2(0, 0);
 				}
+
+				
 			}
-			SetFoot(!(Mathf.Abs(_exVelocity.X) > 10));
+			SetFoot(!(Mathf.Abs(Velocity.X) > 10));
 		}
+
+		if (@event is InputEventMouseButton eventMouseButton)
+		{
+			if (eventMouseButton.IsActionPressed("hook"))
+			{
+				_hookRay.TargetPosition = GetLocalMousePosition().Normalized() * 300f;
+				var pos = _hookRay.GetCollisionPoint();
+				_hookLine.Points = [Vector2.Zero, pos - GlobalPosition];
+			}
+			else if (eventMouseButton.IsActionReleased("hook"))
+			{
+				_hookLine.Points = [Vector2.Zero, Vector2.Zero];
+			}
+			
+		}
+	}
+	private void Respawn(bool reload = false)
+	{
+		Position = _homePosition;
+		if (reload) GetTree().ReloadCurrentScene();
 	}
 	private void SetFoot(bool idle)
 	{

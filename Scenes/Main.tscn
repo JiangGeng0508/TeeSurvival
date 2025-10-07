@@ -46,6 +46,24 @@ position = Vector2(307, 423)
 TargetScene = ExtResource("6_jw32o")
 
 [node name="VisualArea" parent="." instance=ExtResource("3_jw32o")]
-position = Vector2(206, 413)
-_visualAreaModeEnum = 1
-LabelText = "Hello World"
+position = Vector2(23, 253)
+_visualAreaModeEnum = 2
+LabelText = "贴住墙"
+
+[node name="VisualArea_2" parent="." instance=ExtResource("3_jw32o")]
+position = Vector2(1473, 417)
+LabelText = "极限跳距离"
+
+[node name="VisualArea_3" parent="." instance=ExtResource("3_jw32o")]
+position = Vector2(57, 414)
+_visualAreaModeEnum = 2
+LabelText = "蹬墙跳"
+
+[node name="VisualArea_4" parent="." instance=ExtResource("3_jw32o")]
+position = Vector2(-15, -426)
+_visualAreaModeEnum = 2
+LabelText = "到达世界最高峰"
+
+[node name="VisualArea_5" parent="." instance=ExtResource("3_jw32o")]
+position = Vector2(641, 291)
+LabelText = "长按左键攻击"

@@ -34,6 +34,7 @@ texture = ExtResource("3_3a3r4")
 
 [node name="CursorLine" type="Line2D" parent="."]
 visible = false
+z_index = -1
 points = PackedVector2Array(0, 0, 141, 0)
 width = 1.0
 
@@ -52,3 +53,9 @@ zoom = Vector2(1.5, 1.5)
 limit_bottom = 2000
 limit_smoothed = true
 position_smoothing_enabled = true
+
+[node name="HookLine" type="Line2D" parent="."]
+points = PackedVector2Array(0, 75, 0, 0)
+width = 2.0
+
+[node name="HookRay" type="RayCast2D" parent="."]
